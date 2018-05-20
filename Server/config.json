@@ -3,5 +3,36 @@
     "modules": {
         "express": true,
         "fs": true
-    }
+    },
+    "dbname": "projetodbm.db",
+    "models":[
+        {
+            "name": "category",
+            "path": "./Models/Schemas/category_schema.json"
+        },  
+        {
+            "name": "brand",
+            "path": "./Models/Schemas/brand_schema.json"
+        },
+        {
+            "name": "model",
+            "path": "./Models/Schemas/model_schema.json"
+        },
+        {
+            "name": "computer",
+            "path": "./Models/Schemas/computer_schema.json"
+        },
+        {
+            "name": "stock",
+            "path": "./Models/Schemas/stock_schema.json"
+        },
+        {
+            "name": "sale",
+            "path": "./Models/Schemas/sale_schema.json"
+        },
+        {
+            "name": "product",
+            "path": "./Models/Schemas/product_schema.json"
+        }
+    ]
 }

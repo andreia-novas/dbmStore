@@ -15,7 +15,7 @@
     "_comment": "Um modelo tem uma marca e uma marca tem vários modelos",
     "references": [
         {
-            "model": "marca",
+            "model": "brand",
             "relation": "1-M"
         }
     ]

@@ -11,6 +11,8 @@ var serverGenerator = require("./Server/generate_server.js");
 //Importar a função de gerar as classes
 var classGenerator = require("./Models/Class/generate_class.js");
 
+var databaseGenerator = require("./Models/Database/generate_database.js");
+
 //Permite converter os dados que vem dos formulários
 app.use(bodyParser.urlencoded());
 
@@ -36,6 +38,11 @@ app.get('/generate-class', function(req, res){
     res.send('As classes foram geradas')
 })
 
+app.get('/generate-database', function (req, res) {
+    var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
+    databaseGenerator.generate(configJson.dbname, configJson.models);
+    res.send("A base de dados foi gerada");
+});
 
 var server = app.listen(8081, function () {
     var host = server.address().address

@@ -11,6 +11,7 @@ function renderClass(template, schema){
     var view = {
         //Pegamos na primeira letra e colocamo-la em Maiscula e depois juntamos o resto da palavra em minúsculas
         classTitle: schema.title.charAt(0).toUpperCase()+ schema.title.substring(1),
+        idField: schema.title+"ID",
         classProperties: props.join(", "),
         classConstructor: function () {
             var string = "";

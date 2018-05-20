@@ -27,6 +27,13 @@ function serverGenerator(){
             else console.log('Views created')
         });
 
+        //Criação da pasta Database
+        mkdirp('./Publish/Database', function (err) {
+            if (err) console.error(err)
+            else console.log('Database created')
+        });
+
+
         /*
             Geração do template do ficheiro para o servidor.
         */
