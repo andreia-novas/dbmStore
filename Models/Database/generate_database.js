@@ -1,19 +1,19 @@
 var mustache = require('mustache');
 var fs = require('fs');
 
+
 function generate(dbName, models){
     var sqlite3 = require('sqlite3').verbose();
     var name = './Publish/Database/' + dbName.toString();
-    console.log(name)
     var db = new sqlite3.Database(name, function (err) {
         if (err)
-            return console.error("SHIIIIIIIIIIIT: "+err.message);
+            return console.error(err.message);
         console.log('Connected to the in-memory SQlite database.');
     });
 
+    //Por cada model vamos ler o schema que esta no seu path e construir a string para criar a tabela SQL (e em alguns casos fazer o alter table ou criar a tabela intermedia)
     models.forEach(model => {
         var schema = JSON.parse(fs.readFileSync(model.path));
-        //console.log(mustache.render(fs.readFileSync('./Models/Database/create_table.mustache').toString(), createTableString(schema) ))
         db.exec(mustache.render(fs.readFileSync('./Models/Database/create_table.mustache').toString(), createTableString(schema) ) );
     })
     

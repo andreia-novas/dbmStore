@@ -5,6 +5,7 @@ var mkdirp = require('mkdirp');
 var mustache = require('mustache');
 
 function serverGenerator(){
+
     //Apagar a pasta Publish
     del(['Publish']).then(paths => {
         console.log('Deleted files and folders:\n', paths.join('\n'));
@@ -34,9 +35,7 @@ function serverGenerator(){
         });
 
 
-        /*
-            Geração do template do ficheiro para o servidor.
-        */
+        // Geração do template do ficheiro para o servidor.
         fs.readFile('./Server/server.mustache', function (err, data) {
             var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
             var output = mustache.render(data.toString(), configJson);
