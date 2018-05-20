@@ -1,0 +1,41 @@
+{
+    "title": "computer",
+    "description": "computer sold in the store",
+    "type": "object",
+    
+    "required": ["ram, processor, gpu, weight, height, width"],
+   
+    "properties": {
+        "ram": {
+            "type": "integer"
+        }, 
+        "processor": {
+            "type": "string"
+        },
+        "gpu": {
+            "type": "string"
+        }, 
+        "weight":{
+            "type": "number"
+        }, 
+        "height": {
+            "type": "number"
+        },
+        "width": {
+            "type": "number"
+        }
+    },
+
+    "_comment":"Um produto tem um stock, um stock tem vários produtos",
+    "references": [
+        {
+            "model": "model",
+            "relation": "1-1"
+        }, 
+        {
+            "model": "category",
+            "relation": "1-M"
+        }
+    ]
+
+}

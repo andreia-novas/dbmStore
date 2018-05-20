@@ -1,0 +1,22 @@
+{
+    "title": "model",
+    "description": "model of a product",
+    "type": "object",
+        
+    "properties": {
+        "name": {
+            "type": "string",
+            "unique": true
+        }
+    },
+    
+    "required": ["name"],
+
+    "_comment": "Um modelo tem uma marca e uma marca tem vários modelos",
+    "references": [
+        {
+            "model": "marca",
+            "relation": "1-M"
+        }
+    ]
+}

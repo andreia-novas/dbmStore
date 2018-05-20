@@ -1,0 +1,12 @@
+{
+    "title": "sale",
+    "description": "sale of a product or products",
+    "type": "object",
+
+    "properties": {
+        "date": {
+            "type": "string"
+        }
+    },
+    "required": ["date"]
+}

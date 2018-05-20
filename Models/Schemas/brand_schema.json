@@ -1,0 +1,14 @@
+{
+    "title": "brand",
+    "description": "brand of a product",
+    "type": "object",
+    
+    "properties": {
+        "name": {
+            "type": "string",
+            "unique": true
+        }
+    },
+
+    "required": ["name"]
+}

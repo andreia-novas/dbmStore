@@ -1,0 +1,28 @@
+{
+    "title": "product",
+    "description": "product sold in the store",
+    "type": "object",
+   
+    "properties": {
+        "price": {
+            "type": "number"
+        }, 
+        "productQuantity":{
+            "type": "integer"
+        }
+    },
+    
+    "required": ["price", "productQuantity"],
+    
+    "_comment":"Um produto tem um stock, um stock tem vários produtos | Um produto tem um computador",
+    "references": [
+        {
+            "model": "stock",
+            "relation": "1-M"
+        },
+        {
+            "model": "computer",
+            "relation": "1-1"
+        }
+    ]
+}

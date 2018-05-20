@@ -1,0 +1,13 @@
+{
+    "title": "stock",
+    "description": "stock of a product",
+    "type": "object",
+
+    "properties": {
+        "quantity": {
+            "type": "integer"
+        }
+    },
+    
+    "required": ["quantity"]
+}

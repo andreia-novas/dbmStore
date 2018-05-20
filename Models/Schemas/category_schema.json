@@ -1,0 +1,14 @@
+{
+    "title": "category",
+    "description": "category of a product",
+    "type": "object",
+   
+    "properties": {
+        "name": {
+            "type": "string",
+            "unique": true
+        }
+    },
+    
+    "required": ["name"]
+}
