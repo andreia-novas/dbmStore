@@ -9,6 +9,7 @@ function renderClass(template, schema){
     }
     
     var view = {
+        dbName: JSON.parse(fs.readFileSync('./Server/config.json')).dbname,
         //Pegamos na primeira letra e colocamo-la em Maiscula e depois juntamos o resto da palavra em minúsculas
         classTitle: schema.title.charAt(0).toUpperCase()+ schema.title.substring(1),
         idField: schema.title+"ID",

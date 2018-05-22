@@ -13,6 +13,9 @@ var classGenerator = require("./Models/Class/generate_class.js");
 
 var databaseGenerator = require("./Models/Database/generate_database.js");
 
+//Importar a função que gera o ficheiro sqlite.js necessário para o ORM
+var sqlite = require("./Models/ORM/generate_sqlite.js");
+
 //Permite converter os dados que vem dos formulários
 app.use(bodyParser.urlencoded());
 
@@ -23,9 +26,11 @@ app.get('/', function (req, res) {
     res.send("Hello World");
 });
 
+
 app.get('/generate', function(req, res){
     //Executa a função que vai criar as pastas e o ficheiro do servidor
     serverGenerator.serverGenerator();
+    
     res.send('As pastas foram geradas');
 })
 
@@ -34,8 +39,11 @@ app.get('/generate-class', function(req, res){
         files.forEach(file => {
             classGenerator.generateClass(file.split('_')[0]);      
         })
-    })    
-    res.send('As classes foram geradas')
+    })   
+    
+    sqlite.generateSqlite();
+
+    res.send('As classes e o ficheiro para ORM foram gerados')
 })
 
 app.get('/generate-database', function (req, res) {

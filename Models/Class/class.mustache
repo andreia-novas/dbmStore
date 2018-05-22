@@ -1,6 +1,18 @@
+const dbpath = './Publish/Database/{{dbName}}'
+var db = require('../../sqlite.js')(dbpath) //TODO GERAR O FICHEIRO SQLITE PARA DENTRO DA PASTA PUBLISH PARA ACEDERMOS POR AQUI 
+
 class {{classTitle}} {
     constructor ({{classProperties}}) {
         {{{classConstructor}}}
         Object.defineProperty(this, '{{idField}}', {enumerable: false});
     }
+
+    /**
+    *
+    */
+    all(callback){
+        db.all("SELECT * FROM {{classTitle}}", {{classTitle}}, callback);
+    }
 }
+
+module.exports = {{classTitle}};
