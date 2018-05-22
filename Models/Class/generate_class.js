@@ -14,6 +14,13 @@ function renderClass(template, schema){
         classTitle: schema.title.charAt(0).toUpperCase()+ schema.title.substring(1),
         idField: schema.title+"ID",
         classProperties: props.join(", "),
+        joins: function(){
+            if(schema.references != null && schema.length > 0) {
+                return schema.references.map((reference) => {
+                    return ` INNER JOIN ${reference.model} on ${reference.model}.${reference.model}ID = ${schema.title}.${reference.model}ID` 
+                }).join(" "); 
+            }  
+        },
         classConstructor: function () {
             var string = "";
             props.forEach(property => string += `this.${property} = ${property};\n\t\t` )

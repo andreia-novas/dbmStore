@@ -13,6 +13,24 @@ class {{classTitle}} {
     all(callback){
         db.all("SELECT * FROM {{classTitle}}", {{classTitle}}, callback);
     }
+
+    get(id, callback){
+        db.all("SELECT * FROM {{classTitle}} WHERE {{idField}}", [id], {{classTitle}}, callback);
+    }
+
+    get_joins(joins, callback){
+        db.all("SELECT * FROM {{classTitle}} ?", [joins], {{classTitle}}, callback);
+    }
+
+
+
+    /**
+    *
+    */
+    get1_N(params, callback){
+        db.get(SELECT {{columns}} FROM {{table}} {{{joins}}} {{{where}}});
+    }
+
 }
 
 module.exports = {{classTitle}};
