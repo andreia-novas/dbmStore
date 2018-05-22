@@ -27,26 +27,20 @@ class Computer {
         return db.get("SELECT * FROM Computer WHERE computerID = ?;", [id], Computer, callback);
     }
 
-    /**
-    *
-    */
-    static save(callback){
+//delete
+
+    save(callback){
         if(this.computerID){   //Se existir valor no id fazemos update
 
             db.run("UPDATE Computer SET ram = ?, processor = ?, gpu = ?, weight = ?, height = ?, width = ? WHERE computerID = ?;", [this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.computerID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-        //MUDAR ISTO DE NAO METER OS CAMPOS
             db.run("INSERT INTO Computer (ram, processor, gpu, weight, height, width) VALUES (?, ?, ?, ?, ?, ?)", [this.ram, this.processor, this.gpu, this.weight, this.height, this.width] , callback);
+            
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.computerID = id;});
         }
     }
 
-//delete
 }
-Computer.mappingDBtoObject = {
-    ram:'ram', processor:'processor', gpu:'gpu', weight:'weight', height:'height', width:'width', computerID:'computerID'
-}
-
 
 module.exports = Computer;

@@ -22,26 +22,20 @@ class Stock {
         return db.get("SELECT * FROM Stock WHERE stockID = ?;", [id], Stock, callback);
     }
 
-    /**
-    *
-    */
-    static save(callback){
+//delete
+
+    save(callback){
         if(this.stockID){   //Se existir valor no id fazemos update
 
             db.run("UPDATE Stock SET quantity = ? WHERE stockID = ?;", [this.quantity, this.stockID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-        //MUDAR ISTO DE NAO METER OS CAMPOS
             db.run("INSERT INTO Stock (quantity) VALUES (?)", [this.quantity] , callback);
+            
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.stockID = id;});
         }
     }
 
-//delete
 }
-Stock.mappingDBtoObject = {
-    quantity:'quantity', stockID:'stockID'
-}
-
 
 module.exports = Stock;

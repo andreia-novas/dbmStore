@@ -30,16 +30,12 @@ class {{classTitle}} {
             db.run("UPDATE {{classTitle}} SET {{{iterateProperties}}}", {{propertiesWithID}}, callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-        //MUDAR ISTO DE NAO METER OS CAMPOS
             db.run("INSERT INTO {{classTitle}} ({{classProperties}}) VALUES ({{iterateValuesForInsert}})", [{{iterateArrayForInsert}}] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.{{idField}} = id;});
         }
     }
 
-}
-{{classTitle}}.mappingDBtoObject = {
-    {{{mappingDBToObj}}}
 }
 
 module.exports = {{classTitle}};

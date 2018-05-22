@@ -5,7 +5,7 @@ class Category {
     constructor (name) {
         this.name = name;
 		
-        Object.defineProperty(this, 'categoryID', {enumerable: false, writable: true});
+        Object.defineProperty(this, 'categoryID', {enumerable: false});
     }
 
     /**
@@ -22,27 +22,20 @@ class Category {
         return db.get("SELECT * FROM Category WHERE categoryID = ?;", [id], Category, callback);
     }
 
-    /**
-    *
-    */
-     save(callback){
+//delete
+
+    save(callback){
         if(this.categoryID){   //Se existir valor no id fazemos update
 
             db.run("UPDATE Category SET name = ? WHERE categoryID = ?;", [this.name, this.categoryID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-        //MUDAR ISTO DE NAO METER OS CAMPOS
             db.run("INSERT INTO Category (name) VALUES (?)", [this.name] , callback);
-            db.get2("SELECT max(categoryID) from category;", (value) => {this.categoryID = value[Object.keys(value)[0]] })
+            
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.categoryID = id;});
         }
     }
 
-//delete
 }
-Category.mappingDBtoObject = {
-    name:'name', categoryID:'categoryID'
-}
-
 
 module.exports = Category;
