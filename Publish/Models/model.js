@@ -5,7 +5,7 @@ class Model {
     constructor (name) {
         this.name = name;
 		
-        Object.defineProperty(this, 'modelID', {enumerable: false, writable: true});
+        Object.defineProperty(this, 'modelID', {enumerable: false});
     }
 
     /**
@@ -22,11 +22,11 @@ class Model {
         return db.get("SELECT * FROM Model WHERE modelID = ?;", [id], Model, callback);
     }
 
-    /**
-    *
-    */
-     save(callback){
-        
+    static delete(id,callback){
+        return db.get("DELETE FROM Model WHERE modelID = ? ", [this.modelID], callback);
+    }
+
+    save(callback){
         if(this.modelID){   //Se existir valor no id fazemos update
 
             db.run("UPDATE Model SET name = ? WHERE modelID = ?;", [this.name, this.modelID], callback);
@@ -39,16 +39,9 @@ class Model {
         }
     }
 
-    teste(){
-        var x = db.get("SELECT max(modelID) from model", [],Number, (value) => { this.modelID = value+0})
-        console.log("o que é isto ?: "+ x)
-    }
-
-//delete
 }
-// Model.mappingDBtoObject = {
-//     name:'name', modelID:'modelID'
-// }
-
+Model.mappingDBtoObject = {
+    name:'name', modelID:'modelID'
+}
 
 module.exports = Model;

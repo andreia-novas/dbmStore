@@ -23,10 +23,11 @@ class Product {
         return db.get("SELECT * FROM Product WHERE productID = ?;", [id], Product, callback);
     }
 
-    /**
-    *
-    */
-    static save(callback){
+    static delete(id,callback){
+        return db.get("DELETE FROM Product WHERE productID = ? ", [this.productID], callback);
+    }
+
+    save(callback){
         if(this.productID){   //Se existir valor no id fazemos update
 
             db.run("UPDATE Product SET price = ?, productQuantity = ? WHERE productID = ?;", [this.price, this.productQuantity, this.productID], callback);
@@ -34,15 +35,14 @@ class Product {
         } else {    //Caso contrário adiciona-se um novo campo a tabela
         //MUDAR ISTO DE NAO METER OS CAMPOS
             db.run("INSERT INTO Product (price, productQuantity) VALUES (?, ?)", [this.price, this.productQuantity] , callback);
+            
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.productID = id;});
         }
     }
 
-//delete
 }
 Product.mappingDBtoObject = {
     price:'price', productQuantity:'productQuantity', productID:'productID'
 }
-
 
 module.exports = Product;

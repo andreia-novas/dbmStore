@@ -21,7 +21,12 @@ class {{classTitle}} {
         return db.get("SELECT * FROM {{classTitle}} WHERE {{idField}} = ?;", [id], {{classTitle}}, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM {{classTitle}} WHERE {{idField}} = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.{{idField}}){   //Se existir valor no id fazemos update
