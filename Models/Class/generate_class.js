@@ -16,11 +16,37 @@ function renderClass(template, schema){
         classProperties: props.join(", "),
         classConstructor: function () {
             var string = "";
-            props.forEach(property => string += `this.${property} = ${property};\n\t\t` )
+            props.forEach(property => string += `this.${property} = ${property};\n\t\t`);
             return string; 
-        }
+        },
+        //juntar o nome da propriedade ao ? , p/ex: name = ?
+        iterateProperties: function() {
+            var string = "";
+            props.forEach(property => string += `${property} = ?, `);
+            string = string.slice(0, string.length - 2); //Retirar ultimo espaço e ultima virgula
+            string += ` WHERE ${this.idField} = ?;`
+            return string;
+        },
+        //juntar numa string todas as propriedades mais o id
+        propertiesWithID: function() { 
+            var string = "[";
+            props.forEach(property => string += `this.${property}, `);
+            string += `this.${this.idField}]`;
+            return string;
+        },
+        //substitui todas as propriedades por um ? e coloca-as todas numa string separadas por vírgula
+        //ex: (?, ?, ?)
+        iterateValuesForInsert: props.map(p => "?").join(", "),
+
+        //para cada uma das propriedades acrescentamos o this atras e juntamos todos os elementos, separados por uma vírgula, numa string 
+        //ex: (this.name, this.age)
+        iterateArrayForInsert: props.map(p => "this."+p).join(", "),
+
+        mappingDBToObj: function() { 
+            props.push(this.idField);
+            return props.map(p => `${p}:'${p}'`).join(", ");
+         }
     };
-    
     var output = mustache.render(template, view);
     return output;
 }

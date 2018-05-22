@@ -1,5 +1,5 @@
 const dbpath = './Publish/Database/{{dbName}}'
-var db = require('../../sqlite.js')(dbpath) //TODO GERAR O FICHEIRO SQLITE PARA DENTRO DA PASTA PUBLISH PARA ACEDERMOS POR AQUI 
+var db = require('../ORM/sqlite.js')(dbpath) 
 
 class {{classTitle}} {
     constructor ({{classProperties}}) {
@@ -10,9 +10,36 @@ class {{classTitle}} {
     /**
     *
     */
-    all(callback){
-        db.all("SELECT * FROM {{classTitle}}", {{classTitle}}, callback);
+    static all(callback){
+        return db.all("SELECT * FROM {{classTitle}};", {{classTitle}}, callback);
     }
+
+    /**
+    *
+    */
+    static get(id, callback){
+        return db.get("SELECT * FROM {{classTitle}} WHERE {{idField}} = ?;", [id], {{classTitle}}, callback);
+    }
+
+//delete
+
+    save(callback){
+        if(this.{{idField}}){   //Se existir valor no id fazemos update
+        {{! o iterateProperties tem 3 chavetas para conseguirmos mostrar o caracter =  }}
+
+            db.run("UPDATE {{classTitle}} SET {{{iterateProperties}}}", {{propertiesWithID}}, callback);
+
+        } else {    //Caso contrário adiciona-se um novo campo a tabela
+        //MUDAR ISTO DE NAO METER OS CAMPOS
+            db.run("INSERT INTO {{classTitle}} ({{classProperties}}) VALUES ({{iterateValuesForInsert}})", [{{iterateArrayForInsert}}] , callback);
+            
+            //db.run("SELECT last_insert_rowid()", [],(id) => {this.{{idField}} = id;});
+        }
+    }
+
+}
+{{classTitle}}.mappingDBtoObject = {
+    {{{mappingDBToObj}}}
 }
 
 module.exports = {{classTitle}};

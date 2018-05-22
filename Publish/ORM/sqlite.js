@@ -55,6 +55,14 @@ module.exports = function (dbpath) {
                     callback(err !== undefined);
             });
             db.close();
+        },
+        get2: function (statement, callback) {
+            var db = new sqlite.Database(dbpath);
+            db.get(statement,[], function (er,row) {
+                if (callback)
+                callback(row)
+            });
+            db.close();
         }
     }
 }
