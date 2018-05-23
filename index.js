@@ -13,8 +13,7 @@ var classGenerator = require("./Models/Class/generate_class.js");
 
 var databaseGenerator = require("./Models/Database/generate_database.js");
 
-//Importar a função que gera o ficheiro sqlite.js necessário para o ORM
-var sqlite = require("./Models/ORM/generate_sqlite.js");
+var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
 
 //Permite converter os dados que vem dos formulários
 app.use(bodyParser.urlencoded());
@@ -41,13 +40,19 @@ app.get('/generate-class', function(req, res){
         })
     })   
     
-    sqlite.generateSqlite();
+    //Escrever os ficheiros que estao no staticFiles para as pastas de destino
+    configJson.staticFiles.forEach(file => {
+        fs.readFile(file.originalPath, function(err, data){
+           fs.writeFile(file.destinationPath, data.toString());     
+        });
+    });
+
 
     res.send('As classes e o ficheiro para ORM foram gerados')
 })
 
 app.get('/generate-database', function (req, res) {
-    var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
+   
     databaseGenerator.generate(configJson.dbname, configJson.models);
     res.send("A base de dados foi gerada");
 });

@@ -1,5 +1,5 @@
 const dbpath = './Database/projetodbm.db'
-var db = require('../ORM/sqlite.js')(dbpath) 
+var db = require('../Database/sqlite.js')(dbpath) 
 
 class Brand {
     constructor (name) {

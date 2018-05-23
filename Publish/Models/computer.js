@@ -1,5 +1,9 @@
 const dbpath = './Database/projetodbm.db'
+<<<<<<< HEAD
+var db = require('../Database/sqlite.js')(dbpath) 
+=======
 var db = require('../ORM/sqlite.js')(dbpath) 
+>>>>>>> ce7d4a15604a2c533cd1d38f96d94545429a3c06
 
 class Computer {
     constructor (ram, processor, gpu, weight, height, width) {
@@ -10,7 +14,7 @@ class Computer {
 		this.height = height;
 		this.width = width;
 		
-        Object.defineProperty(this, 'computerID', {enumerable: false});
+        Object.defineProperty(this, 'computerID', {enumerable: true, writable: true});
     }
 
     /**

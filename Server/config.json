@@ -34,5 +34,11 @@
             "name": "product",
             "path": "./Models/Schemas/product_schema.json"
         }
+    ],
+    "staticFiles":[
+        {
+            "originalPath": "./Models/Database/sqlite.js",
+            "destinationPath": "./Publish/Database/sqlite.js"
+        }
     ]
 }
