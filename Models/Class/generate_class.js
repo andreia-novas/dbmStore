@@ -14,17 +14,43 @@ function renderClass(template, schema){
         classTitle: schema.title.charAt(0).toUpperCase()+ schema.title.substring(1),
         idField: schema.title+"ID",
         classProperties: props.join(", "),
-        joins: function(){
-            if(schema.references != null && schema.length > 0) {
-                return schema.references.map((reference) => {
-                    return ` INNER JOIN ${reference.model} on ${reference.model}.${reference.model}ID = ${schema.title}.${reference.model}ID` 
-                }).join(" "); 
-            }  
-        },
         classConstructor: function () {
             var string = "";
             props.forEach(property => string += `this.${property} = ${property};\n\t\t`);
             return string; 
+        },
+        joins: function(){
+            if(schema.references != null && schema.references.length > 0) {
+                return schema.references.map((reference) => {
+                    if (reference.relation === "1-1" || reference.relation === "1-M")
+                        return `INNER JOIN ${reference.model} on ${reference.model}.${reference.model}ID = ${schema.title}.${reference.model}ID` 
+                }).join(" ")
+            }  
+        },
+        joinsColumns: function() {
+            if(schema.references != null && schema.references.length > 0) {
+                return schema.references.map((reference) => {
+                    if (reference.relation === "1-1" || reference.relation === "1-M")
+                        return `${reference.model}.${reference.model} as ${reference.model}`
+                }).join(",")
+            }
+        },
+        joinsById: function(){
+            if(schema.references != null && schema.references.length > 0) {
+                return schema.references.reduce(function(result, reference) {
+                    if (reference.relation === "1-M" || reference.relation === "M-M")
+                        result.push(reference.model)
+                    return result;
+                }, []);
+            }
+        }, groupBy: function(){
+            if(schema.references != null && schema.references.length > 0) {
+                return schema.references.reduce(function(result, reference) {
+                    if (reference.relation === "1-M" || reference.relation === "M-M")
+                        result.push(reference.model)
+                    return result;
+                }, []);
+            }
         },
         //juntar o nome da propriedade ao ? , p/ex: name = ?
         iterateProperties: function() {
@@ -49,7 +75,13 @@ function renderClass(template, schema){
         //ex: (this.name, this.age)
         iterateArrayForInsert: props.map(p => "this."+p).join(", ")
     };
+    
+    
     var output = mustache.render(template, view);
+
+
+
+
     return output;
 }
 

@@ -1,4 +1,4 @@
-const dbpath = './Publish/Database/projetodbm.db'
+const dbpath = './Database/projetodbm.db'
 var db = require('../ORM/sqlite.js')(dbpath) 
 
 class Stock {
@@ -21,6 +21,9 @@ class Stock {
     static get(id, callback){
         return db.get("SELECT * FROM Stock WHERE stockID = ?;", [id], Stock, callback);
     }
+    
+    
+
 
     /**
     *
