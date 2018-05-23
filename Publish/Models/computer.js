@@ -1,5 +1,9 @@
 const dbpath = './Database/projetodbm.db'
+<<<<<<< HEAD
 var db = require('../Database/sqlite.js')(dbpath) 
+=======
+var db = require('../ORM/sqlite.js')(dbpath) 
+>>>>>>> ce7d4a15604a2c533cd1d38f96d94545429a3c06
 
 class Computer {
     constructor (ram, processor, gpu, weight, height, width) {
@@ -25,6 +29,21 @@ class Computer {
     */
     static get(id, callback){
         return db.get("SELECT * FROM Computer WHERE computerID = ?;", [id], Computer, callback);
+    }
+    
+    
+    /**
+    * Get with all inner joins
+    */
+    static getWithAllJoins(callback) {
+        return db.all("SELECT ram, processor, gpu, weight, height, width,model.model as model,category.category as category FROM Computer INNER JOIN model on model.modelID = computer.modelID INNER JOIN category on category.categoryID = computer.categoryID;", Computer, callback);
+    }
+
+    /**
+    * Get all Computers with category id 
+    */
+    static getAllBycategory(id, callback) {
+        return db.all("SELECT * FROM Computer Where categoryID = ?;", [id], Computer, callback);
     }
 
     /**

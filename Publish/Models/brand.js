@@ -5,7 +5,7 @@ class Brand {
     constructor (name) {
         this.name = name;
 		
-        Object.defineProperty(this, 'brandID', {enumerable: true, writable: true});
+        Object.defineProperty(this, 'brandID', {enumerable: false});
     }
 
     /**
@@ -21,6 +21,9 @@ class Brand {
     static get(id, callback){
         return db.get("SELECT * FROM Brand WHERE brandID = ?;", [id], Brand, callback);
     }
+    
+    
+
 
     /**
     *

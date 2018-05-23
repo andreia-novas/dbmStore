@@ -20,6 +20,39 @@ class {{classTitle}} {
     static get(id, callback){
         return db.get("SELECT * FROM {{classTitle}} WHERE {{idField}} = ?;", [id], {{classTitle}}, callback);
     }
+    
+    
+    {{#joins}}
+    /**
+    * Get with all inner joins
+    */
+    static getWithAllJoins(callback) {
+        return db.all("SELECT {{classProperties}},{{joinsColumns}} FROM {{classTitle}} {{{joins}}};", {{classTitle}}, callback);
+    }
+    {{/joins}}
+
+    {{#joinsById}}
+    /**
+    * Get all {{classTitle}}s with {{.}} id 
+    */
+    static getAllBy{{.}}(id, callback) {
+        return db.all("SELECT * FROM {{classTitle}} Where {{.}}ID = ?;", [id], {{classTitle}}, callback);
+    }
+    {{/joinsById}}
+
+    /**
+    * Group by field
+    */
+    static getAllGroupBy(field, callback) {
+        return db.all("SELECT * FROM {{classTitle}} GROUP BY ?;", [field], {{classTitle}}, callback);
+    }
+
+    /**
+    * Group by field with innerjoins
+    */
+    static getAllGroupByWithInnerJoins(field, callback) {
+        return db.all("SELECT {{classProperties}}, {{joinsColumns}} FROM {{classTitle}} {{{joins}}} GROUP BY ?;", [field], {{classTitle}}, callback);
+    }
 
     /**
     *

@@ -1,5 +1,9 @@
 const dbpath = './Database/projetodbm.db'
+<<<<<<< HEAD
 var db = require('../Database/sqlite.js')(dbpath) 
+=======
+var db = require('../ORM/sqlite.js')(dbpath) 
+>>>>>>> ce7d4a15604a2c533cd1d38f96d94545429a3c06
 
 class Model {
     constructor (name) {
@@ -20,6 +24,21 @@ class Model {
     */
     static get(id, callback){
         return db.get("SELECT * FROM Model WHERE modelID = ?;", [id], Model, callback);
+    }
+    
+    
+    /**
+    * Get with all inner joins
+    */
+    static getWithAllJoins(callback) {
+        return db.all("SELECT name,brand.brand as brand FROM Model INNER JOIN brand on brand.brandID = model.brandID;", Model, callback);
+    }
+
+    /**
+    * Get all Models with brand id 
+    */
+    static getAllBybrand(id, callback) {
+        return db.all("SELECT * FROM Model Where brandID = ?;", [id], Model, callback);
     }
 
     /**
