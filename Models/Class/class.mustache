@@ -1,5 +1,5 @@
-const dbpath = './Publish/Database/{{dbName}}'
-var db = require('../../sqlite.js')(dbpath) //TODO GERAR O FICHEIRO SQLITE PARA DENTRO DA PASTA PUBLISH PARA ACEDERMOS POR AQUI 
+const dbpath = './Database/{{dbName}}'
+var db = require('../ORM/sqlite.js')(dbpath) 
 
 class {{classTitle}} {
     constructor ({{classProperties}}) {
@@ -10,25 +10,35 @@ class {{classTitle}} {
     /**
     *
     */
-    all(callback){
-        db.all("SELECT * FROM {{classTitle}}", {{classTitle}}, callback);
+    static all(callback){
+        return db.all("SELECT * FROM {{classTitle}};", {{classTitle}}, callback);
     }
-
-    get(id, callback){
-        db.all("SELECT * FROM {{classTitle}} WHERE {{idField}}", [id], {{classTitle}}, callback);
-    }
-
-    get_joins(joins, callback){
-        db.all("SELECT * FROM {{classTitle}} ?", [joins], {{classTitle}}, callback);
-    }
-
-
 
     /**
     *
     */
-    get1_N(params, callback){
-        db.get(SELECT {{columns}} FROM {{table}} {{{joins}}} {{{where}}});
+    static get(id, callback){
+        return db.get("SELECT * FROM {{classTitle}} WHERE {{idField}} = ?;", [id], {{classTitle}}, callback);
+    }
+
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM {{classTitle}} WHERE {{idField}} = ?;", [id], callback);
+    }   
+
+    save(callback){
+        if(this.{{idField}}){   //Se existir valor no id fazemos update
+        {{! o iterateProperties tem 3 chavetas para conseguirmos mostrar o caracter =  }}
+
+            db.run("UPDATE {{classTitle}} SET {{{iterateProperties}}}", {{propertiesWithID}}, callback);
+
+        } else {    //Caso contrário adiciona-se um novo campo a tabela
+            db.run("INSERT INTO {{classTitle}} ({{classProperties}}) VALUES ({{iterateValuesForInsert}})", [{{iterateArrayForInsert}}] , callback);
+            
+            //db.run("SELECT last_insert_rowid()", [],(id) => {this.{{idField}} = id;});
+        }
     }
 
 }

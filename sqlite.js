@@ -56,5 +56,6 @@ module.exports = function (dbpath) {
             });
             db.close();
         }
+      
     }
 }

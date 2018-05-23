@@ -1,5 +1,5 @@
 const dbpath = './Publish/Database/projetodbm.db'
-var db = require('../../sqlite.js')(dbpath) //TODO GERAR O FICHEIRO SQLITE PARA DENTRO DA PASTA PUBLISH PARA ACEDERMOS POR AQUI 
+var db = require('../ORM/sqlite.js')(dbpath) 
 
 class Category {
     constructor (name) {
@@ -11,9 +11,36 @@ class Category {
     /**
     *
     */
-    all(callback){
-        db.all("SELECT * FROM Category", Category, callback);
+    static all(callback){
+        return db.all("SELECT * FROM Category;", Category, callback);
     }
+
+    /**
+    *
+    */
+    static get(id, callback){
+        return db.get("SELECT * FROM Category WHERE categoryID = ?;", [id], Category, callback);
+    }
+
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Category WHERE categoryID = ?;", [id], callback);
+    }   
+
+    save(callback){
+        if(this.categoryID){   //Se existir valor no id fazemos update
+
+            db.run("UPDATE Category SET name = ? WHERE categoryID = ?;", [this.name, this.categoryID], callback);
+
+        } else {    //Caso contrário adiciona-se um novo campo a tabela
+            db.run("INSERT INTO Category (name) VALUES (?)", [this.name] , callback);
+            
+            //db.run("SELECT last_insert_rowid()", [],(id) => {this.categoryID = id;});
+        }
+    }
+
 }
 
 module.exports = Category;
