@@ -22,7 +22,12 @@ class Sale {
         return db.get("SELECT * FROM Sale WHERE saleID = ?;", [id], Sale, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Sale WHERE saleID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.saleID){   //Se existir valor no id fazemos update

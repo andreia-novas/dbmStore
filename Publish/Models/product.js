@@ -23,7 +23,12 @@ class Product {
         return db.get("SELECT * FROM Product WHERE productID = ?;", [id], Product, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Product WHERE productID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.productID){   //Se existir valor no id fazemos update

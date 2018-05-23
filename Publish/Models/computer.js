@@ -27,7 +27,12 @@ class Computer {
         return db.get("SELECT * FROM Computer WHERE computerID = ?;", [id], Computer, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Computer WHERE computerID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.computerID){   //Se existir valor no id fazemos update

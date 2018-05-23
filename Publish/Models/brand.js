@@ -1,4 +1,4 @@
-const dbpath = './Publish/Database/projetodbm.db'
+const dbpath = './Database/projetodbm.db'
 var db = require('../ORM/sqlite.js')(dbpath) 
 
 class Brand {
@@ -22,7 +22,12 @@ class Brand {
         return db.get("SELECT * FROM Brand WHERE brandID = ?;", [id], Brand, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Brand WHERE brandID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.brandID){   //Se existir valor no id fazemos update

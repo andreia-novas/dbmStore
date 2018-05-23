@@ -22,7 +22,12 @@ class Stock {
         return db.get("SELECT * FROM Stock WHERE stockID = ?;", [id], Stock, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Stock WHERE stockID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.stockID){   //Se existir valor no id fazemos update

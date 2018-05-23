@@ -22,7 +22,12 @@ class Category {
         return db.get("SELECT * FROM Category WHERE categoryID = ?;", [id], Category, callback);
     }
 
-//delete
+    /**
+    *
+    */
+    static delete(id,callback){
+        return db.get("DELETE FROM Category WHERE categoryID = ?;", [id], callback);
+    }   
 
     save(callback){
         if(this.categoryID){   //Se existir valor no id fazemos update
