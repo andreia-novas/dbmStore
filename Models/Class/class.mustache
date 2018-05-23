@@ -1,10 +1,10 @@
 const dbpath = './Database/{{dbName}}'
-var db = require('../ORM/sqlite.js')(dbpath) 
+var db = require('../Database/sqlite.js')(dbpath) 
 
 class {{classTitle}} {
     constructor ({{classProperties}}) {
         {{{classConstructor}}}
-        Object.defineProperty(this, '{{idField}}', {enumerable: false});
+        Object.defineProperty(this, '{{idField}}', {enumerable: true, writable: true});
     }
 
     /**

@@ -40,6 +40,7 @@ function renderClass(template, schema){
 
         //para cada uma das propriedades acrescentamos o this atras e juntamos todos os elementos, separados por uma vírgula, numa string 
         //ex: (this.name, this.age)
+        //iterateArrayForInsert: props.map(p =>`this.${p}`).join(", ")
         iterateArrayForInsert: props.map(p => "this."+p).join(", ")
     };
     var output = mustache.render(template, view);

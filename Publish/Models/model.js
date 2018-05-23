@@ -1,11 +1,11 @@
-const dbpath = './Publish/Database/projetodbm.db'
-var db = require('../ORM/sqlite.js')(dbpath) 
+const dbpath = './Database/projetodbm.db'
+var db = require('../Database/sqlite.js')(dbpath) 
 
 class Model {
     constructor (name) {
         this.name = name;
 		
-        Object.defineProperty(this, 'modelID', {enumerable: false});
+        Object.defineProperty(this, 'modelID', {enumerable: true, writable: true});
     }
 
     /**

@@ -33,13 +33,7 @@ function serverGenerator(){
             if (err) console.error(err)
             else console.log('Database created')
         });
-
-        //Criação da pasta ORM
-        mkdirp('./Publish/ORM', function (err) {
-            if (err) console.error(err)
-            else console.log('ORM created')
-        });
-
+        
         // Geração do template do ficheiro para o servidor.
         fs.readFile('./Server/server.mustache', function (err, data) {
             var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
