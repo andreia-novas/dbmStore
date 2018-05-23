@@ -78,12 +78,7 @@ function renderClass(template, schema){
     };
     
     
-    var output = mustache.render(template, view);
-
-
-
-
-    return output;
+    return mustache.render(template, view);
 }
 
 function generateClass(filename){

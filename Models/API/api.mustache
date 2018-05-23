@@ -1,0 +1,66 @@
+var express = require('express');
+var router = express.Router();
+
+/**
+* Método que faz o mapeamento entre um objeto retornado pelo módulo sqlite num objeto de uma classe
+criada
+* @param {any} object Representa o objeto retornado pela query à abse de dados
+* @param {any} type Representa o tipo de objeto que se pretende converter
+* @returns Devolve um objeto do tipo "type" com o conteúdo que está no objeto "object"
+*/
+function mapping(object, type) {
+    var obj = new type();
+    Object.keys(object).forEach(function (value) {
+        if (obj.hasOwnProperty(value)) //Se o objeto possuir o atributo que se está a verificar então recebe o valor retornado da query da base de dados
+            obj[value] = object[value];
+    });
+    return obj;
+}
+
+{{#models}}
+    var {{upperCaseName}} = require('../Models/{{lowerCaseName}}.js');
+{{/models}}
+
+{{#models}}
+
+    //Adicionar um {{upperCaseName}} à base de dados
+    router.post('/{{lowerCaseName}}', function(req, res) {
+        mapping(req.body, {{upperCaseName}}).save();
+    });
+
+    //Obter todos os {{upperCaseName}} da base de dados
+    router.get('/{{lowerCaseName}}', function(req, res) {
+        {{upperCaseName}}.all(function (rows){
+            res.json(rows);
+        });
+    });
+
+    //Obter um {{upperCaseName}} pelo seu id
+    router.get('/{{lowerCaseName}}/:id', function(req, res) {
+        {{upperCaseName}}.get(req.params.id, function(row){
+            res.json(row);
+        });
+    });
+
+    //Atualizar o {{upperCaseName}} com o id passado
+    router.put('/{{lowerCaseName}}/:id', function(req, res) {
+        var {{lowerCaseName}} = mapping(req.body, {{upperCaseName}});
+        {{lowerCaseName}}.{{lowerCaseName}}ID = req.params.id;
+        {{lowerCaseName}}.save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
+    });
+
+    //Apagar o {{upperCaseName}} com o id passado
+    router.delete('/{{lowerCaseName}}/:id', function (req, res){
+        {{upperCaseName}}.delete(req.params.id, function (err){
+            res.json({
+                success: !err
+            });
+        });
+    });
+{{/models}}
+
+module.exports = router;

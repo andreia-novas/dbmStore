@@ -15,6 +15,8 @@ var databaseGenerator = require("./Models/Database/generate_database.js");
 
 var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
 
+var apiGenerator = require("./Models/API/generate_api.js");
+
 //Permite converter os dados que vem dos formulários
 app.use(bodyParser.urlencoded());
 
@@ -60,5 +62,9 @@ app.get('/generate-database', function (req, res) {
 var server = app.listen(8081, function () {
     var host = server.address().address
     var port = server.address().port
+    apiGenerator.generateApi();
+    apiGenerator.generateBackoffice();
+    apiGenerator.generateFrontoffice();
+
     console.log("Server listening at http://%s:%s", host, port)
 });
