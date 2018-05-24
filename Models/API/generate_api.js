@@ -16,6 +16,9 @@ function render(template, configJson){
     return mustache.render(template, view);
 }
 
+/**
+ * Função que lê o template da API e o config.json e cria um ficheiro js com a informação obtida dos ficheiros lidos
+ */
 function generateApi(){
     fs.readFile('./Models/API/api.mustache', function (err, data) {
         var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
@@ -27,7 +30,7 @@ function generateApi(){
 function generateFrontoffice(){
     fs.readFile('./Models/API/frontoffice.mustache', function (err, data) {
         var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
-        fs.writeFile('./Publish/Controllers/frontoffice.js', render(data.toString(), configJson));
+        fs.writeFile('./Publish/Server/frontoffice.js', render(data.toString(), configJson));
     });
    
 }
@@ -35,7 +38,7 @@ function generateFrontoffice(){
 function generateBackoffice(){
     fs.readFile('./Models/API/backoffice.mustache', function (err, data) {
         var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
-        fs.writeFile('./Publish/Controllers/backoffice.js', render(data.toString(), configJson));
+        fs.writeFile('./Publish/Server/backoffice.js', render(data.toString(), configJson));
     });
    
 }
