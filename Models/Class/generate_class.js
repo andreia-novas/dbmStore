@@ -19,22 +19,35 @@ function renderClass(template, schema){
             props.forEach(property => string += `this.${property} = ${property};\n\t\t`);
             return string; 
         },
+        //String with all the inner joins for relations 1-1 and 1-m
+        //So that you can fetch the fields of the foreign keys tables
+        // For example computer and category (select computer.*, category.name as category....)
         joins: function(){
-            if(schema.references != null && schema.references.length > 0) {
-                return schema.references.map((reference) => {
+            if(schema.references != null && schema.references.length > 0) { //If exists any references
+                return schema.references.map((reference) => { //Iterate the references(map returns an array)
+                    //Exclude the M-M
                     if (reference.relation === "1-1" || reference.relation === "1-M")
+                        //String with the inner join construction
                         return `INNER JOIN ${reference.model} on ${reference.model}.${reference.model}ID = ${schema.title}.${reference.model}ID` 
-                }).join(" ")
+                }).join(" ") //join array as a string separated by spaces
             }  
         },
+        //String with all the columns for relations 1-1 and 1-m
+        //So that you can fetch the fields of the foreign keys tables
+        // produces string with "column.name as column" for each existent reference separated by commas
         joinsColumns: function() {
             if(schema.references != null && schema.references.length > 0) {
-                return schema.references.map((reference) => {
+                return schema.references.map((reference) => { //Iterate the references(map returns an array)
+                    //Exclude the M-M
                     if (reference.relation === "1-1" || reference.relation === "1-M")
+                        //String with the column construction
                         return `${reference.model}.${reference.model} as ${reference.model}`
-                }).join(",")
+                }).join(",")//join array as a string separated by commas
             }
-        },
+        }, 
+        //Array with all the tables referenced in relations 1-M and M-M
+        //So that you can build getAllByReferencedField
+        //Returns an array so that it can be iterated in the template file
         joinsById: function(){
             if(schema.references != null && schema.references.length > 0) {
                 return schema.references.reduce(function(result, reference) {
@@ -43,7 +56,9 @@ function renderClass(template, schema){
                     return result;
                 }, []);
             }
-        }, groupBy: function(){
+        }, 
+         //Array equal to the above....
+        groupBy: function(){
             if(schema.references != null && schema.references.length > 0) {
                 return schema.references.reduce(function(result, reference) {
                     if (reference.relation === "1-M" || reference.relation === "M-M")
