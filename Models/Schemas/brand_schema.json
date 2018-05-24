@@ -5,6 +5,7 @@
     
     "properties": {
         "name": {
+            "description": "brand name",
             "type": "string",
             "unique": true
         }

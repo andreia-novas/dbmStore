@@ -5,9 +5,11 @@
    
     "properties": {
         "price": {
+            "description": "product price",
             "type": "number"
         }, 
         "productQuantity":{
+            "description": "quantity of a specific product",
             "type": "integer"
         }
     },

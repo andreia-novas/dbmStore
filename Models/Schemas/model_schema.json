@@ -5,6 +5,7 @@
         
     "properties": {
         "name": {
+            "description": "model name",
             "type": "string",
             "unique": true
         }

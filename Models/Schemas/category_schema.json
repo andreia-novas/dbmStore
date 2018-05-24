@@ -5,6 +5,7 @@
    
     "properties": {
         "name": {
+            "description": "category name",
             "type": "string",
             "unique": true
         }

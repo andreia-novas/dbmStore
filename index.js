@@ -24,12 +24,13 @@ var apiGenerator = require("./Models/API/generate_api.js");
 app.use(bodyParser.urlencoded());
 
 //Redirecionar a rota para o ficheiro index.html
-app.use(express.static('Public'));
+//app.use(express.static('Public'));
 
 app.get('/', function (req, res) {
     res.send("Hello World");
 });
 
+//TODO: TRATAR DO PROBLEMA DA SINCRONIZAÇAO
 app.post('/generate', function(req, res){
     serverGenerator.serverGenerator();
 
@@ -38,22 +39,26 @@ app.post('/generate', function(req, res){
         files.forEach(file => {
             classGenerator.generateClass(file.split('_')[0]);      
         })
-    })   
+    });
     
-    //Escrever os ficheiros que estao no staticFiles para as pastas de destino
+    // //Escrever os ficheiros que estao no staticFiles para as pastas de destino
     configJson.staticFiles.forEach(file => {
-        fs.readFile(file.originalPath, function(err, data){
+        fs.readFileASync(file.originalPath, function(err, data){
            fs.writeFile(file.destinationPath, data.toString());     
         });
     });
 
-    //Gerar a BD
-    databaseGenerator.generate(configJson.dbname, configJson.models);
+    // //Gerar a BD
+    // databaseGenerator.generate(configJson.dbname, configJson.models);
 
-    apiGenerator.generateApi();
-    apiGenerator.generateFrontoffice();
-    apiGenerator.generateBackoffice();
+    // //Gerar a API
+    // apiGenerator.generateApi();
+    // //Gerar o frontoffice
+    // apiGenerator.generateFrontoffice();
+    // //Gerar o backoffice
+    // apiGenerator.generateBackoffice();
 });
+
 
 
 app.get('/generate', function(req, res){

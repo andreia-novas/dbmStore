@@ -7,21 +7,27 @@
    
     "properties": {
         "ram": {
+            "description": "computer ram",
             "type": "integer"
         }, 
         "processor": {
+            "description": "computer processor",
             "type": "string"
         },
         "gpu": {
+            "description": "computer gpu",
             "type": "string"
         }, 
         "weight":{
+            "description": "computer weight",
             "type": "number"
         }, 
         "height": {
+            "description": "computer height",
             "type": "number"
         },
         "width": {
+            "description": "computer width",
             "type": "number"
         }
     },

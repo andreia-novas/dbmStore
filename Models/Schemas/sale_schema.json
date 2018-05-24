@@ -5,6 +5,7 @@
 
     "properties": {
         "date": {
+            "description": "date of a sale",
             "type": "string"
         }
     },

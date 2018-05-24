@@ -1,10 +1,15 @@
 var mustache = require('mustache');
 var fs = require('fs');
 
-
+/**
+ * Função que cria a base de dados com as tabelas obtidas através dos models passados por argumento
+ * @param {*} template 
+ * @param {*} schema 
+ */
 function generate(dbName, models){
     var sqlite3 = require('sqlite3').verbose();
     var name = './Publish/Database/' + dbName.toString();
+
     var db = new sqlite3.Database(name, function (err) {
         if (err)
             return console.error(err.message);
@@ -24,8 +29,14 @@ function generate(dbName, models){
     });
 }
 
+/**
+ * Função que cria uma string, para inserir numa query de base de dados, com a informação obtida de um schema
+ * @param {*} schema 
+ */
 function createTableString(schema){
+
     var tableObject = {
+
         table_name: schema.title,
         primary_key: schema.title + "ID INTEGER PRIMARY KEY ",
         table_properties: function(){
@@ -33,6 +44,7 @@ function createTableString(schema){
 
             for(var p in schema.properties){
                 propertiesString += p.toString();
+                
                 //Devolve-me o valor que está dentro da propriedade p
                 //p/ex: {"name:"{  "type": "string"  }} , p --> name | value --> {"type": "string"}
                 var value = schema.properties[p];
@@ -58,7 +70,7 @@ function createTableString(schema){
 
                 propertiesString += ", ";
             }
-
+            
             //Serve para tirar a vírgula e espaço que são colocados no final 
             return propertiesString.slice(0, propertiesString.length-2);
         },
@@ -67,11 +79,12 @@ function createTableString(schema){
                 var refsString = "";
                 schema.references.forEach((ref, index) =>{
                     var refsObject = schema.references[index];
+
                     if(refsObject.relation !== "M-M"){
                         //Se for M-M fazemos Alter table para adicionar as foreign key
                         refsString += `ALTER TABLE ${schema.title} ADD COLUMN ${refsObject.model}ID INTEGER 
                         REFERENCES ${refsObject.model} (${refsObject.model}ID);\n`
-
+                    
                     } else {
                         //Caso contrário criamos a tabela intermediária
                         refsString += `CREATE TABLE ${schema.title}_${refsObject.model} (${schema.title}_${refsObject.model}ID INTEGER
@@ -81,6 +94,7 @@ function createTableString(schema){
                     }
                    
                 }); 
+
                 return refsString;        
             }
         }

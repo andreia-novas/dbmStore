@@ -1,6 +1,11 @@
 var mustache = require('mustache');
 var fs = require('fs');
 
+/**
+ * Função que faz a renderização entre um template e a informação obtida de um ficheiro json
+ * @param {*} template 
+ * @param {*} configJson ficheiro json com a informação que queremos renderizar
+ */
 function render(template, configJson){
 
     var view = { 
@@ -27,6 +32,9 @@ function generateApi(){
    
 }
 
+/**
+ * Função que lê o template do frontoffice e o config.json e cria um ficheiro js com a informação obtida dos ficheiros lidos
+ */
 function generateFrontoffice(){
     fs.readFile('./Models/API/frontoffice.mustache', function (err, data) {
         var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
@@ -35,6 +43,9 @@ function generateFrontoffice(){
    
 }
 
+/**
+ * Função que lê o template do backoffice e o config.json e cria um ficheiro js com a informação obtida dos ficheiros lidos
+ */
 function generateBackoffice(){
     fs.readFile('./Models/API/backoffice.mustache', function (err, data) {
         var configJson = JSON.parse(fs.readFileSync('./Server/config.json'));

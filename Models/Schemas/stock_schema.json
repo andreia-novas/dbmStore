@@ -5,6 +5,7 @@
 
     "properties": {
         "quantity": {
+            "description": "quantity of a product",
             "type": "integer"
         }
     },
