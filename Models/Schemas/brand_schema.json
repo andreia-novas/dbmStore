@@ -11,5 +11,13 @@
         }
     },
 
-    "required": ["name"]
+    "required": ["name"],
+
+    "references": [
+        {
+            "model": "model",
+            "relation": "1-M",
+            "nonDependent": true
+        }
+    ]
 }

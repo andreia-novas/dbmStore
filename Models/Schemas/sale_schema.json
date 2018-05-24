@@ -9,5 +9,13 @@
             "type": "string"
         }
     },
-    "required": ["date"]
+    "required": ["date"],
+
+    "references": [
+        {
+            "model": "product",
+            "relation": "M-M",
+            "nonDependent" : true
+        }
+    ]
 }

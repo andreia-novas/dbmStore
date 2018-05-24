@@ -41,6 +41,11 @@
         {
             "model": "category",
             "relation": "1-M"
+        }, 
+        {
+            "model": "product",
+            "relation": "1-1",
+            "nonDependent": true
         }
     ]
 

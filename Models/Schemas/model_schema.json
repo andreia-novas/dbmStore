@@ -18,6 +18,11 @@
         {
             "model": "brand",
             "relation": "1-M"
+        },
+        {
+            "model": "computer",
+            "relation": "1-1",
+            "nonDependent": true
         }
     ]
 }

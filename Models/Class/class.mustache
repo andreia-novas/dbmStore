@@ -1,76 +1,45 @@
-const dbpath = './Database/{{dbName}}'
-var db = require('../Database/sqlite.js')(dbpath) 
+const dbpath = './Publish/Database/{{dbName}}';
+var db = require('../Database/sqlite.js')(dbpath); 
+{{{requireDependencies}}}
 
 class {{classTitle}} {
-    constructor ({{classProperties}}) {
+    constructor({{classProperties}}) {
         {{{classConstructor}}}
+
         Object.defineProperty(this, '{{idField}}', {enumerable: true, writable: true});
     }
 
     /**
-    * Função que permite obter todos os registos existentes na base de dados da entidade {{classTitle}}
-    * @param {*} callback função que se pretende executar com os resultados obtidos da query
+    * Method that gets all the {{classTitle}} objects from the database
+    * @param {*} callback function to be applied to the results query
     */
-    static all(callback){
+    static all(callback) {
         return db.all("SELECT * FROM {{classTitle}};", {{classTitle}}, callback);
     }
 
     /**
-    * Função que permite obter o registo da base de dados com o id passado como argumento
-    * @param {*} id id do registo que se pretende obter
-    * @param {*} callback função que se pretende executar com o resultado obtido da query
+    * Method that gets a specific {{classTitle}} object from the database
+    * @param {*} id  id of the object to obtain
+    * @param {*} callback function to be applied to the results query
     */
-    static get(id, callback){
+    static get(id, callback) {
         return db.get("SELECT * FROM {{classTitle}} WHERE {{idField}} = ?;", [id], {{classTitle}}, callback);
     }
-    
-    
-    {{#joins}}
-    /**
-    * Get with all inner joins
-    */
-    static getWithAllJoins(callback) {
-        return db.all("SELECT {{classProperties}},{{joinsColumns}} FROM {{classTitle}} {{{joins}}};", {{classTitle}}, callback);
-    }
-    {{/joins}}
-
-    {{#joinsById}}
-    /**
-    * Get all {{classTitle}}s with {{.}} id 
-    */
-    static getAllBy{{.}}(id, callback) {
-        return db.all("SELECT * FROM {{classTitle}} Where {{.}}ID = ?;", [id], {{classTitle}}, callback);
-    }
-    {{/joinsById}}
 
     /**
-    * Group by field
+    * Method that removes a specific {{classTitle}} object from the database
+    * @param {*} id id of the object to remove
+    * @param {*} callback function to be applied to the results query
     */
-    static getAllGroupBy(field, callback) {
-        return db.all("SELECT * FROM {{classTitle}} GROUP BY ?;", [field], {{classTitle}}, callback);
-    }
-
-    /**
-    * Group by field with innerjoins
-    */
-    static getAllGroupByWithInnerJoins(field, callback) {
-        return db.all("SELECT {{classProperties}}, {{joinsColumns}} FROM {{classTitle}} {{{joins}}} GROUP BY ?;", [field], {{classTitle}}, callback);
-    }
-
-    /**
-    * Função que permite eliminar o registo na tabela com o id passado como argumento
-    * @param {*} id id do registo que se pretende eliminar
-    * @param {*} callback função que se pretende executar com o resultado obtido da query
-    */
-    static delete(id,callback){
+    static delete(id,callback) {
         return db.get("DELETE FROM {{classTitle}} WHERE {{idField}} = ?;", [id], callback);
     }   
 
     /**
-    * Função que insere ou atualiza um registo consoante a existência ou não existência do registo na base de dados
-    * @param {*} callback função que se pretende executar com o resultado obtido da query
+    * Method that inserts or update a {{classTitle}} object
+    * @param {*} callback function to be applied to the results query
     */
-    save(callback){
+    save(callback) {
         if(this.{{idField}}){   //Se existir valor no id fazemos update
         {{! o iterateProperties tem 3 chavetas para conseguirmos mostrar o caracter =  }}
 
@@ -82,6 +51,8 @@ class {{classTitle}} {
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.{{idField}} = id;});
         }
     }
+
+    {{{getRelation}}}
 
 }
 

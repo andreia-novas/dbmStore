@@ -10,5 +10,13 @@
         }
     },
     
-    "required": ["quantity"]
+    "required": ["quantity"],
+
+    "references": [
+        {
+            "model": "product",
+            "relation": "1-M",
+            "nonDependent": true
+        }
+    ]
 }

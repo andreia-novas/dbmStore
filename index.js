@@ -24,72 +24,44 @@ var apiGenerator = require("./Models/API/generate_api.js");
 app.use(bodyParser.urlencoded());
 
 //Redirecionar a rota para o ficheiro index.html
-//app.use(express.static('Public'));
+app.use(express.static('Public'));
 
 app.get('/', function (req, res) {
     res.send("Hello World");
 });
 
-//TODO: TRATAR DO PROBLEMA DA SINCRONIZAÇAO
 app.post('/generate', function(req, res){
+
     serverGenerator.serverGenerator();
 
-    //Gera as classes
-    fs.readdir('./Models/Schemas', function(err, files){
-        files.forEach(file => {
-            classGenerator.generateClass(file.split('_')[0]);      
-        })
-    });
-    
-    // //Escrever os ficheiros que estao no staticFiles para as pastas de destino
-    configJson.staticFiles.forEach(file => {
-        fs.readFileASync(file.originalPath, function(err, data){
-           fs.writeFile(file.destinationPath, data.toString());     
+    setTimeout(function(){
+        //Gera as classes
+        fs.readdir('./Models/Schemas', function(err, files){
+            files.forEach(file => {
+                classGenerator.generateClass(file.split('_')[0]);      
+            })
         });
-    });
-
-    // //Gerar a BD
-    // databaseGenerator.generate(configJson.dbname, configJson.models);
-
-    // //Gerar a API
-    // apiGenerator.generateApi();
-    // //Gerar o frontoffice
-    // apiGenerator.generateFrontoffice();
-    // //Gerar o backoffice
-    // apiGenerator.generateBackoffice();
-});
-
-
-
-app.get('/generate', function(req, res){
-    //Executa a função que vai criar as pastas e o ficheiro do servidor
-    serverGenerator.serverGenerator();
-    
-    res.send('As pastas foram geradas');
-})
-
-app.get('/generate-class', function(req, res){
-    fs.readdir('./Models/Schemas', function(err, files){
-        files.forEach(file => {
-            classGenerator.generateClass(file.split('_')[0]);      
-        })
-    })   
-    
-    //Escrever os ficheiros que estao no staticFiles para as pastas de destino
-    configJson.staticFiles.forEach(file => {
-        fs.readFile(file.originalPath, function(err, data){
-           fs.writeFile(file.destinationPath, data.toString());     
+        
+        // //Escrever os ficheiros que estao no staticFiles para as pastas de destino
+        configJson.staticFiles.forEach(file => {
+            fs.readFile(file.originalPath, function(err, data){
+               fs.writeFile(file.destinationPath, data.toString());     
+            });
         });
-    });
-
-
-    res.send('As classes e o ficheiro para ORM foram gerados')
-})
-
-app.get('/generate-database', function (req, res) {
-   
-    databaseGenerator.generate(configJson.dbname, configJson.models);
-    res.send("A base de dados foi gerada");
+    
+        //Gerar a BD
+        databaseGenerator.generate(configJson.dbname, configJson.models);
+    
+        //Gerar a API
+        apiGenerator.generateApi();
+        //Gerar o frontoffice
+        apiGenerator.generateFrontoffice();
+        //Gerar o backoffice
+        apiGenerator.generateBackoffice();
+    
+        res.send("The code was generated to the Publish directory.");
+        
+    }, 1000);
 });
 
 var server = app.listen(8081, function () {
