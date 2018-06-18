@@ -25,8 +25,6 @@ app.use('/backoffice', backoffice);
     app.use('/{{name}}', frontEnd{{name}});
 {{/models}}
 
-
-
 const server = app.listen({{port}},function () {
     console.log('Example app listening on port {{port}}')
 });
