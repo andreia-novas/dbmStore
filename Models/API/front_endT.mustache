@@ -1,0 +1,33 @@
+var express = require('express');
+var router = express.Router();
+
+
+/*
+* Vai buscar todos os dados necessários da tabela {{title}} a inseir na tabela a mostrar ao utilizador 
+*/
+const controller = require('../Models/{{title}}');
+// nos temos de ir buscar todos dados e envia-la para o res.render 
+router.get("/", function(req,res){
+    controller.all( rows => {
+        res.render("table", {
+            columns: Object.keys(new controller()).map(key => {
+            return {
+            name: key
+            };
+            }),
+            rows: rows.map(obj => {
+                return {
+                    properties: Object.keys(obj).map(key => {
+                        return {
+                            name: key,
+                            value: obj[key]
+                        }
+                    })
+                }
+            }),
+            properties: [{{properties}}]
+        });
+    });
+});
+
+module.exports = router;

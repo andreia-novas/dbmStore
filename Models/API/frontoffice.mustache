@@ -1,9 +1,32 @@
 var express = require('express');
 var router = express.Router();
 
+
+// 
+const controller = require('../Models/{{title}}');
+// nos temos de ir bucar todos dados e envia-la para o res.render 
 router.get("/", function(req,res){
-    res.send("View: frontoffice")
-})
+    controller.all( rows => {
+        res.render("table", {
+            columns: Object.keys(new controller()).map(key => {
+            return {
+            name: key
+            };
+            }),
+            rows: rows.map(obj => {
+                return {
+                    properties: Object.keys(obj).map(key => {
+                        return {
+                            name: key,
+                            value: obj[key]
+                        }
+                    })
+                }
+            }),
+            //properties: [{{properties}}]
+        });
+    });
+});
 
 {{#models}}
 

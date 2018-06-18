@@ -1,6 +1,7 @@
 //Criação de um servidor em NodeJS utilizando o módulo express
 var express = require("express");
 var fs = require('fs');
+
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -64,7 +65,7 @@ app.post('/generate', function(req, res){
     }, 1000);
 });
 
-var server = app.listen(8081, function () {
+const server = app.listen(8081, function () {
     var host = server.address().address
     var port = server.address().port
 

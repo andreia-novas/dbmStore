@@ -1,13 +1,32 @@
-var express = require('express');
-var app = express();
-var api = require('./Controllers/api.js');
-var frontoffice = require('./Controllers/frontoffice.js');
-var backoffice = require('./Controllers/backoffice.js');
+const express = require('express');
+const mustacheExpress = require('mustache-express');
+const app = express();
+const api = require('../Controllers/api.js');
 
-var server = app.listen({{port}},function () {
-    console.log('Example app listening on port {{port}}')
-});
+/**
+const backoffice = require('../Controllers/backoffice.js');
+**/
+const bodyParser = require('body-parser');
+
+//Permite converter os dados que vem dos formulários
+app.use(bodyParser.urlencoded());
+
+app.engine('mustache', mustacheExpress());
+app.set('view engine', 'mustache'); //extensão dos ficheiros das views
+app.set('views', 'C:/Users/Andreia/Desktop/P1_AndreiaP_150221021_AndreiaN_150221080_BernardoG_150221099/Models/Views'); //indicação de qual a pasta que irá conter as views
 
 app.use('/api', api);
+
+/**
 app.use('/backoffice', backoffice);
-app.use('/', frontoffice);
+**/
+{{#models}}
+    const frontEnd{{name}}= require('../Controllers/api_{{name}}.js');
+    app.use('/{{name}}', frontEnd{{name}});
+{{/models}}
+
+
+
+const server = app.listen({{port}},function () {
+    console.log('Example app listening on port {{port}}')
+});
