@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <h1>Form {{title}}</h1>
+    </head>
+    <body>
+        {{>menu}}
+        {{#properties}}
+        <div>
+            <label>{{name}}:</label>
+            <input type="text" value="{{value}}" />
+        </div>
+        {{/properties}}
+    </body>
+</html>

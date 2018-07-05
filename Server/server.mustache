@@ -3,9 +3,9 @@ const mustacheExpress = require('mustache-express');
 const app = express();
 const api = require('../Controllers/api.js');
 
-/**
-* const backoffice = require('../Controllers/backoffice.js');
-**/
+
+const backoffice = require('../Controllers/backoffice.js');
+
 const bodyParser = require('body-parser');
 
 //Permite converter os dados que vem dos formulários
@@ -17,9 +17,8 @@ app.set('views', 'C:/Users/Andreia/Desktop/P1_AndreiaP_150221021_AndreiaN_150221
 
 app.use('/api', api);
 
-/**
-* app.use('/backoffice', backoffice);
-**/
+app.use('/backoffice', backoffice);
+
 {{#models}}
     const frontEnd{{name}}= require('../Controllers/api_{{name}}.js');
     app.use('/{{name}}', frontEnd{{name}});

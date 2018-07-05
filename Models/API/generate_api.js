@@ -34,7 +34,7 @@ function generateApi(){
  * Função que lê o template do frontoffice e o config.json e cria um ficheiro js com a informação obtida dos ficheiros lidos
  */
 function generateFrontoffice(){
-    fs.readFile('./Models/API/front_endT.mustache', function (err, data) {
+    fs.readFile('./Models/API/frontoffice.mustache', function (err, data) {
         const configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
         configJson.models.forEach(element => {
             const schema = require(`../Schemas/${element.name}_schema.json`);

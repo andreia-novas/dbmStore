@@ -40,7 +40,7 @@ app.post('/generate', function(req, res){
         fs.readdir('./Models/Schemas', function(err, files){
             files.forEach(file => {
                 classGenerator.generateClass(file.split('_')[0]);      
-            })
+            });
         });
         
         // //Escrever os ficheiros que estao no staticFiles para as pastas de destino

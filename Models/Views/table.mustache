@@ -1,11 +1,17 @@
 <html>
+    <head>
+        <title>{{title}}</title>
+    </head>
     <body>
-    {{title}}
+        {{>menu}}
         <table>
             <tr>
                 {{#columns}}
                     <th>{{name}}</th>
                 {{/columns}}
+                {{#actions}}
+                    <th></th>
+                {{/actions}}
             </tr>
             {{#rows}}
                 <tr>
@@ -14,6 +20,19 @@
                             {{value}}
                         </td>
                     {{/properties}}
+                    {{#actions}}
+                        <td>
+                            {{#link}}
+                                <a href="{{link}}" title="{{tooltip}}">
+                                    {{label}}
+                                    {{#image}}
+                                        <img src="{{src}}" alt="{{alt}}"/>
+                                    {{/image}}
+                                </a>
+                            {{/link}}
+                            
+                        </td>
+                    {{/actions}}
                 </tr>
             {{/rows}}
         </table>
