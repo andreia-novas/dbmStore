@@ -16,6 +16,7 @@
     "references": [
         {
             "model": "model",
+            "label": "name",
             "relation": "1-M",
             "nonDependent": true
         }

@@ -3,9 +3,13 @@
     "description": "computer sold in the store",
     "type": "object",
     
-    "required": ["ram, processor, gpu, weight, height, width"],
+    "required": ["name", "ram, processor, gpu, weight, height, width"],
    
     "properties": {
+        "name": {
+            "description": "computer name",
+            "type": "string"
+        },
         "ram": {
             "description": "computer ram",
             "type": "integer"
@@ -36,14 +40,17 @@
     "references": [
         {
             "model": "model",
+            "label": "name",
             "relation": "1-1"
         }, 
         {
             "model": "category",
+            "label": "name",
             "relation": "1-M"
         }, 
         {
             "model": "product",
+            "label":"name",
             "relation": "1-1",
             "nonDependent": true
         }

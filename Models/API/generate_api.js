@@ -41,7 +41,7 @@ function generateFrontoffice(){
             const objs = {};
             objs.title = schema.title;
             objs.rows = [];
-            fs.writeFile(`./Publish/Controllers/api_${element.name}.js`, mustache.render(data.toString(), objs));
+            fs.writeFile(`./Publish/Views/api_${element.name}.js`, mustache.render(data.toString(), objs));
         });
     });
 }
@@ -52,7 +52,15 @@ function generateFrontoffice(){
 function generateBackoffice(){
     fs.readFile('./Models/API/backoffice.mustache', function (err, data) {
         const configJson = JSON.parse(fs.readFileSync('./Server/config.json'));
-        fs.writeFile('./Publish/Controllers/backoffice.js', render(data.toString(), configJson));
+        configJson.models.forEach(element => {
+            const schema = require(`../Schemas/${element.name}_schema.json`);
+            const objs = {};
+            objs.title = schema.title;
+            objs.rows = [];
+            objs.properties = JSON.stringify(schema.properties);
+            objs.references = JSON.stringify(schema.references);
+            fs.writeFile(`./Publish/Views/back_${element.name}.js`, mustache.render(data.toString(), objs));
+        });
     });
    
 }

@@ -14,6 +14,7 @@
     "references": [
         {
             "model": "product",
+            "label": "name",
             "relation": "M-M",
             "nonDependent" : true
         }

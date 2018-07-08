@@ -5,16 +5,16 @@ const controller = require('../Models/product');
 
 /*
 * Vai buscar todos os dados necessários da tabela product a inseir na tabela a mostrar ao utilizador 
+* Também mostra a opção de ver detalhes
 */
 // nos temos de ir buscar todos dados e envia-la para o res.render 
 router.get("/", function(req,res){
     controller.all( rows => {
         res.render("table", {
-            columns: Object.keys(new controller()).map(key => {
-                return {
-                    name: key
-                };
-            }),
+            css:'./Public/styles.css',
+            actions:['Details'],
+            properties: [],
+            title: 'product',
             rows: rows.map(obj => {
                 return {
                     properties: Object.keys(obj).map(key => {
@@ -22,11 +22,23 @@ router.get("/", function(req,res){
                             name: key,
                             value: obj[key]
                         }
-                    })
+                    }),
+                    actions: [{
+                        label: '',
+                        link: './product/' + obj['productID'],
+                        image: {
+                            src: 'C:/Users/Andreia/Desktop/P1_AndreiaP_150221021_AndreiaN_150221080_BernardoG_150221099/Models/Images/details.png'
+                            /*src: './Models/Images/details.png'*/
+                        },
+                        tooltip: 'Detalhe'
+                    }]
                 }
             }),
-            properties: [],
-            title: 'product'
+            columns: Object.keys(new controller()).map(key => {
+                return {
+                    name: key
+                };
+            })
         });
     });
 });
@@ -44,15 +56,7 @@ router.get("/:id", function(req,res){
                     name: key,
                     value: obj[key]
                 }
-            })/*,
-            actions: [{
-                label: '',
-                link: './product/Detalhe/' + obj.id,
-                image: {
-                    src: './Models/Images/details.png'
-                },
-                tooltip: 'Detalhe'
-            }]*/
+            })
         })
     });
 });

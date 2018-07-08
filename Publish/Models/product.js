@@ -4,8 +4,9 @@ var Sale = require('./sale.js');
 
 
 class Product {
-    constructor(price, productQuantity) {
-        this.price = price;
+    constructor(name, price, productQuantity) {
+        this.name = name;
+		this.price = price;
 		this.productQuantity = productQuantity;
 		
 
@@ -45,10 +46,10 @@ class Product {
     save(callback) {
         if(this.productID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Product SET price = ?, productQuantity = ? WHERE productID = ?;", [this.price, this.productQuantity, this.productID], callback);
+            db.run("UPDATE Product SET name = ?, price = ?, productQuantity = ? WHERE productID = ?;", [this.name, this.price, this.productQuantity, this.productID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Product (price, productQuantity) VALUES (?, ?)", [this.price, this.productQuantity] , callback);
+            db.run("INSERT INTO Product (name, price, productQuantity) VALUES (?, ?, ?)", [this.name, this.price, this.productQuantity] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.productID = id;});
         }

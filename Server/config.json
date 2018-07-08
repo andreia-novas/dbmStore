@@ -39,6 +39,18 @@
         {
             "originalPath": "./Models/Database/sqlite.js",
             "destinationPath": "./Publish/Database/sqlite.js"
+        },
+        {
+            "originalPath": "./Models/Images/details.png",
+            "destinationPath": "./Publish/Images/details.png"
+        },
+        {
+            "originalPath": "./Models/Images/delete.png",
+            "destinationPath": "./Publish/Images/delete.png"
+        },
+        {
+            "originalPath": "./Models/Images/edit.png",
+            "destinationPath": "./Publish/Images/edit.png"
         }
     ]
 }

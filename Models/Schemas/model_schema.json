@@ -17,10 +17,12 @@
     "references": [
         {
             "model": "brand",
+            "label": "name",
             "relation": "1-M"
         },
         {
             "model": "computer",
+            "label": "name",
             "relation": "1-1",
             "nonDependent": true
         }

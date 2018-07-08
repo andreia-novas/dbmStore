@@ -2,9 +2,7 @@ const express = require('express');
 const mustacheExpress = require('mustache-express');
 const app = express();
 const api = require('../Controllers/api.js');
-
-
-const backoffice = require('../Controllers/backoffice.js');
+//const backoffice = require('../Controllers/backoffice.js');
 
 const bodyParser = require('body-parser');
 
@@ -17,11 +15,18 @@ app.set('views', 'C:/Users/Andreia/Desktop/P1_AndreiaP_150221021_AndreiaN_150221
 
 app.use('/api', api);
 
-app.use('/backoffice', backoffice);
+//app.use('/backoffice', backoffice);
+
+app.use(express.static('Images' + '/public'));
 
 {{#models}}
-    const frontEnd{{name}}= require('../Controllers/api_{{name}}.js');
-    app.use('/{{name}}', frontEnd{{name}});
+    const frontEnd{{name}}= require('../Views/api_{{name}}.js');
+    app.use('/front/{{name}}', frontEnd{{name}});
+{{/models}}
+
+{{#models}}
+    const backEnd{{name}}= require('../Views/back_{{name}}.js');
+    app.use('/back/{{name}}', backEnd{{name}});
 {{/models}}
 
 const server = app.listen({{port}},function () {

@@ -1,9 +1,12 @@
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="{{{css}}}">
+
         <title>{{title}}</title>
     </head>
     <body>
-        {{>menu}}
+        <!--{{>menu}}-->
+        <h1>Table of {{title}}</h1>
         <table>
             <tr>
                 {{#columns}}
@@ -23,14 +26,13 @@
                     {{#actions}}
                         <td>
                             {{#link}}
-                                <a href="{{link}}" title="{{tooltip}}">
+                                <a href="{{{link}}}" title="{{tooltip}}">
                                     {{label}}
                                     {{#image}}
-                                        <img src="{{src}}" alt="{{alt}}"/>
+                                        <img src="{{{src}}}" alt="{{alt}}" style="height:26px"/>
                                     {{/image}}
                                 </a>
                             {{/link}}
-                            
                         </td>
                     {{/actions}}
                 </tr>

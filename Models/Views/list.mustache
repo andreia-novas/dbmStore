@@ -1,55 +1,57 @@
 <html>
-<head>
-    <title>{{title}}</title>
-    <script>        
-        function apagar(id) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", "../Publish/Controllers/api/{{title}}/" + id, true);
-            xhr.onreadystatechange = function () {
-                if(xhr.readyState === 4 && xhr.status === 200) {
-                    var response = JSON.parse(this.responseText)
-                    if(response.success) 
-                        window.location.reload();
+    <head>
+        <title>{{title}}</title>
+        <script>        
+            function apagar(id) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE", "../Publish/Controllers/api/{{title}}/" + id, true);
+                xhr.onreadystatechange = function () {
+                    if(xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(this.responseText)
+                        if(response.success) 
+                            window.location.reload();
+                    }
                 }
+                xhr.send(); 
             }
-            xhr.send(); 
-        }
-    </script>
-</head>
-<body>
-    <table>
-        <tr>
-            {{#columns}}
-                <th>{{name}}</th>
-            {{/columns}}
-            {{#actions}}
-                <th></th>
-            {{/actions}}
-        </tr>
-        {{#rows}}
-        <tr>
-            {{#properties}}
-            <td>
-                {{value}}
-            </td>
-            {{/properties}} 
-            {{#actions}}
-            <td>
-                {{#link}}
-                    <a href="{{link}}" title="{{tooltip}}" {{#events}}{{name}}="javascript:{{function}}({{args}})" {{/events}}>
-                        {{label}}
-                        {{#image}}
-                            <img src="{{src}}" alt="{{alt}}" />
-                        {{/image}}
-                    </a>
-                {{/link}}
-                
-            </td>
-            {{/actions}}
-        </tr>
-        {{/rows}}
-    </table>
-    <input type="button" value="Inserir" onclick="javascript:window.location.replace('./{{title}}/Inserir')" />
-</body>
+        </script>
+    </head>
+    <body>
+        <!--{{>menu}}-->
+        <h1>Table of {{title}}</h1>
+        <table>
+            <tr>
+                {{#columns}}
+                    <th>{{name}}</th>
+                {{/columns}}
+                {{#actions}}
+                    <th></th>
+                {{/actions}}
+            </tr>
+            {{#rows}}
+            <tr>
+                {{#properties}}
+                <td>
+                    {{value}}
+                </td>
+                {{/properties}} 
+                {{#actions}}
+                <td>
+                    {{#link}}
+                        <a href="{{{link}}}" title="{{tooltip}}" {{#events}}{{name}}="javascript:{{function}}({{args}})" {{/events}}>
+                            {{label}}
+                            {{#image}}
+                                <img src="{{{src}}}" alt="{{alt}}" style="height:26px"/>
+                            {{/image}}
+                        </a>
+                    {{/link}}
+                    
+                </td>
+                {{/actions}}
+            </tr>
+            {{/rows}}
+        </table>
+        <input type="button" value="Insert" onclick="javascript:window.location.replace('./{{title}}/form')" />
+    </body>
 
 </html>

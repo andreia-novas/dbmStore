@@ -4,8 +4,9 @@ var Product = require('./product.js');
 
 
 class Computer {
-    constructor(ram, processor, gpu, weight, height, width) {
-        this.ram = ram;
+    constructor(name, ram, processor, gpu, weight, height, width) {
+        this.name = name;
+		this.ram = ram;
 		this.processor = processor;
 		this.gpu = gpu;
 		this.weight = weight;
@@ -49,10 +50,10 @@ class Computer {
     save(callback) {
         if(this.computerID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Computer SET ram = ?, processor = ?, gpu = ?, weight = ?, height = ?, width = ? WHERE computerID = ?;", [this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.computerID], callback);
+            db.run("UPDATE Computer SET name = ?, ram = ?, processor = ?, gpu = ?, weight = ?, height = ?, width = ? WHERE computerID = ?;", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.computerID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Computer (ram, processor, gpu, weight, height, width) VALUES (?, ?, ?, ?, ?, ?)", [this.ram, this.processor, this.gpu, this.weight, this.height, this.width] , callback);
+            db.run("INSERT INTO Computer (name, ram, processor, gpu, weight, height, width) VALUES (?, ?, ?, ?, ?, ?, ?)", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.computerID = id;});
         }

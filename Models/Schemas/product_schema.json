@@ -4,6 +4,10 @@
     "type": "object",
    
     "properties": {
+        "name": {
+            "description": "product name",
+            "type": "string"
+        },
         "price": {
             "description": "product price",
             "type": "number"
@@ -14,20 +18,23 @@
         }
     },
     
-    "required": ["price", "productQuantity"],
+    "required": ["name", "price", "productQuantity"],
     
     "_comment":"Um produto tem um stock, um stock tem vários produtos | Um produto tem um computador",
     "references": [
         {
             "model": "stock",
+            "label": "quantity",
             "relation": "1-M"
         },
         {
             "model": "computer",
+            "label":"name",
             "relation": "1-1"
         } ,
         {
             "model": "sale",
+            "label": "date",
             "relation": "M-M"
         }
     ]

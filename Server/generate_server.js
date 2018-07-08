@@ -36,6 +36,12 @@ function serverGenerator(){
             else console.log('Folder Database created');
         });
 
+        //Criação da pasta Images
+        mkdirp('./Publish/Images', function (err) {
+            if (err) console.error(err);
+            else console.log('Folder Images created');
+        });
+
         //Criação da pasta Server
         mkdirp('./Publish/Server', function (err) {
             if (err) console.error(err);

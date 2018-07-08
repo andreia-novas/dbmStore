@@ -15,6 +15,7 @@
     "references": [
         {
             "model": "product",
+            "label": "productQuantity",
             "relation": "1-M",
             "nonDependent": true
         }
