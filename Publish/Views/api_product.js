@@ -43,6 +43,7 @@ router.get("/", function(req,res){
     });
 });
 
+
 /*
 * Vai mostrar ao utilizador os detalhes de um/uma determinado/a product
 */

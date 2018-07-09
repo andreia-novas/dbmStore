@@ -4,8 +4,9 @@ var Product = require('./product.js');
 
 
 class Sale {
-    constructor(date) {
+    constructor(date, productID) {
         this.date = date;
+		this.productID = productID;
 		
 
         Object.defineProperty(this, 'saleID', {enumerable: true, writable: true});
@@ -44,10 +45,10 @@ class Sale {
     save(callback) {
         if(this.saleID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Sale SET date = ? WHERE saleID = ?;", [this.date, this.saleID], callback);
+            db.run("UPDATE Sale SET date = ?, productID = ? WHERE saleID = ?;", [this.date, this.productID, this.saleID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Sale (date) VALUES (?)", [this.date] , callback);
+            db.run("INSERT INTO Sale (date, productID) VALUES (?, ?)", [this.date, this.productID] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.saleID = id;});
         }

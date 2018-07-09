@@ -4,8 +4,10 @@ var Computer = require('./computer.js');
 
 
 class Model {
-    constructor(name) {
+    constructor(name, brandID, computerID) {
         this.name = name;
+		this.brandID = brandID;
+		this.computerID = computerID;
 		
 
         Object.defineProperty(this, 'modelID', {enumerable: true, writable: true});
@@ -44,10 +46,10 @@ class Model {
     save(callback) {
         if(this.modelID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Model SET name = ? WHERE modelID = ?;", [this.name, this.modelID], callback);
+            db.run("UPDATE Model SET name = ?, brandID = ?, computerID = ? WHERE modelID = ?;", [this.name, this.brandID, this.computerID, this.modelID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Model (name) VALUES (?)", [this.name] , callback);
+            db.run("INSERT INTO Model (name, brandID, computerID) VALUES (?, ?, ?)", [this.name, this.brandID, this.computerID] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.modelID = id;});
         }

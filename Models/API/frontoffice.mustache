@@ -25,12 +25,9 @@ router.get("/", function(req,res){
                     }),
                     actions: [{
                         label: '',
-                        link: './{{title}}/' + obj['{{title}}ID'],
-                        image: {
-                            src: 'C:/Users/Andreia/Desktop/P1_AndreiaP_150221021_AndreiaN_150221080_BernardoG_150221099/Models/Images/details.png'
-                            /*src: './Models/Images/details.png'*/
-                        },
-                        tooltip: 'Detalhe'
+                        link: '../../front/{{title}}/' + obj['{{title}}ID'],
+                        image: "fa fa-info-circle",
+                        tooltip: 'Details'
                     }]
                 }
             }),

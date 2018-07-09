@@ -1,57 +1,62 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script>        
             function apagar(id) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("DELETE", "../Publish/Controllers/api/{{title}}/" + id, true);
+                xhr.open("DELETE", "../../api/{{title}}/" + id, true);
                 xhr.onreadystatechange = function () {
                     if(xhr.readyState === 4 && xhr.status === 200) {
-                        var response = JSON.parse(this.responseText)
+                        var response = JSON.parse(this.responseText);
                         if(response.success) 
-                            window.location.reload();
+                            window.location.replace('./');
                     }
                 }
                 xhr.send(); 
             }
         </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     </head>
     <body>
         <!--{{>menu}}-->
         <h1>Table of {{title}}</h1>
-        <table>
-            <tr>
-                {{#columns}}
-                    <th>{{name}}</th>
-                {{/columns}}
-                {{#actions}}
-                    <th></th>
-                {{/actions}}
-            </tr>
-            {{#rows}}
-            <tr>
-                {{#properties}}
-                <td>
-                    {{value}}
-                </td>
-                {{/properties}} 
-                {{#actions}}
-                <td>
-                    {{#link}}
-                        <a href="{{{link}}}" title="{{tooltip}}" {{#events}}{{name}}="javascript:{{function}}({{args}})" {{/events}}>
-                            {{label}}
-                            {{#image}}
-                                <img src="{{{src}}}" alt="{{alt}}" style="height:26px"/>
-                            {{/image}}
-                        </a>
-                    {{/link}}
-                    
-                </td>
-                {{/actions}}
-            </tr>
-            {{/rows}}
+        <table class="table">
+            <thead>
+                <tr>
+                    {{#columns}}
+                        <th scope="col">{{name}}</th>
+                    {{/columns}}
+                    {{#actions}}
+                        <th scope="col"></th>
+                    {{/actions}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#rows}}
+                <tr>
+                    {{#properties}}
+                    <td scope="row">
+                        {{value}}
+                    </td>
+                    {{/properties}} 
+                    {{#actions}}
+                        <td scope="row">
+                                <a href="{{{link}}}" title="{{tooltip}}" {{#events}}{{name}}="javascript:{{function}}({{args}})" {{/events}}>
+                                    <i class="{{{image}}}" style="font-size:26px;"></i>
+                                </a>
+                        </td>
+                    {{/actions}}
+                </tr>
+                {{/rows}}
+            </tbody>
         </table>
-        <input type="button" value="Insert" onclick="javascript:window.location.replace('./{{title}}/form')" />
+        <a class="btn btn-outline-primary" href="../../back/{{title}}/form">
+            Insert
+        </a>
     </body>
 
 </html>

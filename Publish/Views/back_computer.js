@@ -26,25 +26,19 @@ router.get("/", function(req,res){
                     }),
                     actions: [{
                         label: '',
-                        link: './computer/' + obj['computerID'],
-                        image: {
-                            src: './Models/Images/details.png'
-                        },
-                        tooltip: 'Detalhe'
+                        link: '../../back/computer/' + obj['computerID'],
+                        image: "fa fa-info-circle",
+                        tooltip: 'Details'
                     }, {
                         label: '',
-                        link: './computer/' + obj['computerID'],
-                        image: {
-                            src: './Models/Images/edit.png'
-                        },
-                        tooltip: 'Editar'
+                        link: '../../back/computer/edit/' + obj['computerID'],
+                        image: "fa fa-edit",
+                        tooltip: 'Edit'
                     }, {
                         label: '',
                         link: '#',
-                        image: {
-                            src: './Models/Images/delete.png'
-                        },
-                        tooltip: 'Apagar',
+                        image: "fa fa-trash",
+                        tooltip: 'Delete',
                         events: [{
                             name: "onclick",
                             function: "apagar",
@@ -78,6 +72,7 @@ router.get("/form", function(req,res){
     });
 });
 
+
 /*
 * Vai mostrar ao administrador os detalhes de um/uma determinado/a computer
 */
@@ -95,5 +90,36 @@ router.get("/:id", function(req,res){
         })
     });
 });
+
+
+/*
+* Vai mostrar ao administrador um form para inserir um/uma novo/nova computer
+*/
+router.get("/edit/:id", function(req,res){
+    controller.get( req.params.id, obj => {
+        res.render("edit", {
+            title: 'computer',
+            id: req.params.id,
+            properties: Object.keys({"name":{"description":"computer name","type":"string"},"ram":{"description":"computer ram","type":"integer"},"processor":{"description":"computer processor","type":"string"},"gpu":{"description":"computer gpu","type":"string"},"weight":{"description":"computer weight","type":"number"},"height":{"description":"computer height","type":"number"},"width":{"description":"computer width","type":"number"}}).map(
+                key => {
+                    return {
+                        name: key,
+                        value: obj[key],
+                        type: obj[key].type
+                    }
+                }
+            ),
+            references: [{"model":"model","label":"name","relation":"1-1"},{"model":"category","label":"name","relation":"1-M"},{"model":"product","label":"name","relation":"1-1","nonDependent":true}].map(element => {
+                return {
+                    model: element.model,
+                    values: obj[element.model + 'ID'],
+                    label: element.label
+                }
+            }),
+            hasReferences: [{"model":"model","label":"name","relation":"1-1"},{"model":"category","label":"name","relation":"1-M"},{"model":"product","label":"name","relation":"1-1","nonDependent":true}].length !== 0
+        })
+    });
+});
+
 
 module.exports = router;

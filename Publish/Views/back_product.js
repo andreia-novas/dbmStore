@@ -26,25 +26,19 @@ router.get("/", function(req,res){
                     }),
                     actions: [{
                         label: '',
-                        link: './product/' + obj['productID'],
-                        image: {
-                            src: './Models/Images/details.png'
-                        },
-                        tooltip: 'Detalhe'
+                        link: '../../back/product/' + obj['productID'],
+                        image: "fa fa-info-circle",
+                        tooltip: 'Details'
                     }, {
                         label: '',
-                        link: './product/' + obj['productID'],
-                        image: {
-                            src: './Models/Images/edit.png'
-                        },
-                        tooltip: 'Editar'
+                        link: '../../back/product/edit/' + obj['productID'],
+                        image: "fa fa-edit",
+                        tooltip: 'Edit'
                     }, {
                         label: '',
                         link: '#',
-                        image: {
-                            src: './Models/Images/delete.png'
-                        },
-                        tooltip: 'Apagar',
+                        image: "fa fa-trash",
+                        tooltip: 'Delete',
                         events: [{
                             name: "onclick",
                             function: "apagar",
@@ -78,6 +72,7 @@ router.get("/form", function(req,res){
     });
 });
 
+
 /*
 * Vai mostrar ao administrador os detalhes de um/uma determinado/a product
 */
@@ -95,5 +90,36 @@ router.get("/:id", function(req,res){
         })
     });
 });
+
+
+/*
+* Vai mostrar ao administrador um form para inserir um/uma novo/nova product
+*/
+router.get("/edit/:id", function(req,res){
+    controller.get( req.params.id, obj => {
+        res.render("edit", {
+            title: 'product',
+            id: req.params.id,
+            properties: Object.keys({"name":{"description":"product name","type":"string"},"price":{"description":"product price","type":"number"},"productQuantity":{"description":"quantity of a specific product","type":"integer"}}).map(
+                key => {
+                    return {
+                        name: key,
+                        value: obj[key],
+                        type: obj[key].type
+                    }
+                }
+            ),
+            references: [{"model":"stock","label":"quantity","relation":"1-M"},{"model":"computer","label":"name","relation":"1-1"},{"model":"sale","label":"date","relation":"M-M"}].map(element => {
+                return {
+                    model: element.model,
+                    values: obj[element.model + 'ID'],
+                    label: element.label
+                }
+            }),
+            hasReferences: [{"model":"stock","label":"quantity","relation":"1-M"},{"model":"computer","label":"name","relation":"1-1"},{"model":"sale","label":"date","relation":"M-M"}].length !== 0
+        })
+    });
+});
+
 
 module.exports = router;

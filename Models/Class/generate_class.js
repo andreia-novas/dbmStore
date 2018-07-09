@@ -14,6 +14,11 @@ function renderClass(template, schema) {
         props.push(p);
     }
 
+    //percorre as references e coloca no array das propriedades
+    schema.references.forEach(r =>{
+        props.push(r.model + 'ID');
+    });
+
     var view = {
         dbName: JSON.parse(fs.readFileSync('./Server/config.json')).dbname,
 

@@ -26,25 +26,19 @@ router.get("/", function(req,res){
                     }),
                     actions: [{
                         label: '',
-                        link: './category/' + obj['categoryID'],
-                        image: {
-                            src: './Models/Images/details.png'
-                        },
-                        tooltip: 'Detalhe'
+                        link: '../../back/category/' + obj['categoryID'],
+                        image: "fa fa-info-circle",
+                        tooltip: 'Details'
                     }, {
                         label: '',
-                        link: './category/' + obj['categoryID'],
-                        image: {
-                            src: './Models/Images/edit.png'
-                        },
-                        tooltip: 'Editar'
+                        link: '../../back/category/edit/' + obj['categoryID'],
+                        image: "fa fa-edit",
+                        tooltip: 'Edit'
                     }, {
                         label: '',
                         link: '#',
-                        image: {
-                            src: './Models/Images/delete.png'
-                        },
-                        tooltip: 'Apagar',
+                        image: "fa fa-trash",
+                        tooltip: 'Delete',
                         events: [{
                             name: "onclick",
                             function: "apagar",
@@ -78,6 +72,7 @@ router.get("/form", function(req,res){
     });
 });
 
+
 /*
 * Vai mostrar ao administrador os detalhes de um/uma determinado/a category
 */
@@ -95,5 +90,36 @@ router.get("/:id", function(req,res){
         })
     });
 });
+
+
+/*
+* Vai mostrar ao administrador um form para inserir um/uma novo/nova category
+*/
+router.get("/edit/:id", function(req,res){
+    controller.get( req.params.id, obj => {
+        res.render("edit", {
+            title: 'category',
+            id: req.params.id,
+            properties: Object.keys({"name":{"description":"category name","type":"string","unique":true}}).map(
+                key => {
+                    return {
+                        name: key,
+                        value: obj[key],
+                        type: obj[key].type
+                    }
+                }
+            ),
+            references: [{"model":"computer","label":"name","relation":"1-M","nonDependent":true}].map(element => {
+                return {
+                    model: element.model,
+                    values: obj[element.model + 'ID'],
+                    label: element.label
+                }
+            }),
+            hasReferences: [{"model":"computer","label":"name","relation":"1-M","nonDependent":true}].length !== 0
+        })
+    });
+});
+
 
 module.exports = router;

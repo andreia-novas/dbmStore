@@ -4,7 +4,7 @@ var Product = require('./product.js');
 
 
 class Computer {
-    constructor(name, ram, processor, gpu, weight, height, width) {
+    constructor(name, ram, processor, gpu, weight, height, width, modelID, categoryID, productID) {
         this.name = name;
 		this.ram = ram;
 		this.processor = processor;
@@ -12,6 +12,9 @@ class Computer {
 		this.weight = weight;
 		this.height = height;
 		this.width = width;
+		this.modelID = modelID;
+		this.categoryID = categoryID;
+		this.productID = productID;
 		
 
         Object.defineProperty(this, 'computerID', {enumerable: true, writable: true});
@@ -50,10 +53,10 @@ class Computer {
     save(callback) {
         if(this.computerID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Computer SET name = ?, ram = ?, processor = ?, gpu = ?, weight = ?, height = ?, width = ? WHERE computerID = ?;", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.computerID], callback);
+            db.run("UPDATE Computer SET name = ?, ram = ?, processor = ?, gpu = ?, weight = ?, height = ?, width = ?, modelID = ?, categoryID = ?, productID = ? WHERE computerID = ?;", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.modelID, this.categoryID, this.productID, this.computerID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Computer (name, ram, processor, gpu, weight, height, width) VALUES (?, ?, ?, ?, ?, ?, ?)", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width] , callback);
+            db.run("INSERT INTO Computer (name, ram, processor, gpu, weight, height, width, modelID, categoryID, productID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [this.name, this.ram, this.processor, this.gpu, this.weight, this.height, this.width, this.modelID, this.categoryID, this.productID] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.computerID = id;});
         }

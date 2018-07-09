@@ -25,7 +25,11 @@ function mapping(object, type) {
 
     //Adicionar um {{upperCaseName}} à base de dados
     router.post('/{{lowerCaseName}}', function(req, res) {
-        mapping(req.body, {{upperCaseName}}).save();
+        mapping(req.body, {{upperCaseName}}).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os {{upperCaseName}} da base de dados

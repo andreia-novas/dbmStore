@@ -26,25 +26,19 @@ router.get("/", function(req,res){
                     }),
                     actions: [{
                         label: '',
-                        link: './{{title}}/' + obj['{{title}}ID'],
-                        image: {
-                            src: './Models/Images/details.png'
-                        },
-                        tooltip: 'Detalhe'
+                        link: '../../back/{{title}}/' + obj['{{title}}ID'],
+                        image: "fa fa-info-circle",
+                        tooltip: 'Details'
                     }, {
                         label: '',
-                        link: './{{title}}/' + obj['{{title}}ID'],
-                        image: {
-                            src: './Models/Images/edit.png'
-                        },
-                        tooltip: 'Editar'
+                        link: '../../back/{{title}}/edit/' + obj['{{title}}ID'],
+                        image: "fa fa-edit",
+                        tooltip: 'Edit'
                     }, {
                         label: '',
                         link: '#',
-                        image: {
-                            src: './Models/Images/delete.png'
-                        },
-                        tooltip: 'Apagar',
+                        image: "fa fa-trash",
+                        tooltip: 'Delete',
                         events: [{
                             name: "onclick",
                             function: "apagar",
@@ -55,6 +49,26 @@ router.get("/", function(req,res){
                 }
             })
         });
+    });
+});
+
+
+/*
+* Vai mostrar ao administrador um form para inserir um/uma novo/nova {{title}}
+*/
+router.get("/form", function(req,res){
+    res.render("form", {
+        title: '{{title}}',
+        properties: Object.keys({{{properties}}}).map(
+            key => {
+                return {
+                    name: key,
+                    type: {{{properties}}}[key].type
+                }
+            }
+        ),
+        references: {{{references}}},
+        hasReferences: {{{references}}}.length !== 0
     });
 });
 
@@ -81,20 +95,31 @@ router.get("/:id", function(req,res){
 /*
 * Vai mostrar ao administrador um form para inserir um/uma novo/nova {{title}}
 */
-router.get("/form", function(req,res){
-    res.render("form", {
-        title: '{{title}}',
-        properties: Object.keys({{{properties}}}).map(
-            key => {
-                return {
-                    name: key,
-                    type: {{{properties}}}[key].type
+router.get("/edit/:id", function(req,res){
+    controller.get( req.params.id, obj => {
+        res.render("edit", {
+            title: '{{title}}',
+            id: req.params.id,
+            properties: Object.keys({{{properties}}}).map(
+                key => {
+                    return {
+                        name: key,
+                        value: obj[key],
+                        type: obj[key].type
+                    }
                 }
-            }
-        ),
-        references: {{{references}}},
-        hasReferences: {{{references}}}.length !== 0
+            ),
+            references: {{{references}}}.map(element => {
+                return {
+                    model: element.model,
+                    values: obj[element.model + 'ID'],
+                    label: element.label
+                }
+            }),
+            hasReferences: {{{references}}}.length !== 0
+        })
     });
 });
+
 
 module.exports = router;

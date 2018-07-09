@@ -4,8 +4,9 @@ var Computer = require('./computer.js');
 
 
 class Category {
-    constructor(name) {
+    constructor(name, computerID) {
         this.name = name;
+		this.computerID = computerID;
 		
 
         Object.defineProperty(this, 'categoryID', {enumerable: true, writable: true});
@@ -44,10 +45,10 @@ class Category {
     save(callback) {
         if(this.categoryID){   //Se existir valor no id fazemos update
 
-            db.run("UPDATE Category SET name = ? WHERE categoryID = ?;", [this.name, this.categoryID], callback);
+            db.run("UPDATE Category SET name = ?, computerID = ? WHERE categoryID = ?;", [this.name, this.computerID, this.categoryID], callback);
 
         } else {    //Caso contrário adiciona-se um novo campo a tabela
-            db.run("INSERT INTO Category (name) VALUES (?)", [this.name] , callback);
+            db.run("INSERT INTO Category (name, computerID) VALUES (?, ?)", [this.name, this.computerID] , callback);
             
             //db.run("SELECT last_insert_rowid()", [],(id) => {this.categoryID = id;});
         }

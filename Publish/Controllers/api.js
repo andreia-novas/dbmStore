@@ -28,7 +28,11 @@ function mapping(object, type) {
 
     //Adicionar um Category à base de dados
     router.post('/category', function(req, res) {
-        mapping(req.body, Category).save();
+        mapping(req.body, Category).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Category da base de dados
@@ -67,7 +71,11 @@ function mapping(object, type) {
 
     //Adicionar um Brand à base de dados
     router.post('/brand', function(req, res) {
-        mapping(req.body, Brand).save();
+        mapping(req.body, Brand).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Brand da base de dados
@@ -106,7 +114,11 @@ function mapping(object, type) {
 
     //Adicionar um Model à base de dados
     router.post('/model', function(req, res) {
-        mapping(req.body, Model).save();
+        mapping(req.body, Model).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Model da base de dados
@@ -145,7 +157,11 @@ function mapping(object, type) {
 
     //Adicionar um Computer à base de dados
     router.post('/computer', function(req, res) {
-        mapping(req.body, Computer).save();
+        mapping(req.body, Computer).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Computer da base de dados
@@ -184,7 +200,11 @@ function mapping(object, type) {
 
     //Adicionar um Stock à base de dados
     router.post('/stock', function(req, res) {
-        mapping(req.body, Stock).save();
+        mapping(req.body, Stock).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Stock da base de dados
@@ -223,7 +243,11 @@ function mapping(object, type) {
 
     //Adicionar um Sale à base de dados
     router.post('/sale', function(req, res) {
-        mapping(req.body, Sale).save();
+        mapping(req.body, Sale).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Sale da base de dados
@@ -262,7 +286,11 @@ function mapping(object, type) {
 
     //Adicionar um Product à base de dados
     router.post('/product', function(req, res) {
-        mapping(req.body, Product).save();
+        mapping(req.body, Product).save(function (err) {
+            res.json({
+                success: !err
+            });
+        });
     });
 
     //Obter todos os Product da base de dados
